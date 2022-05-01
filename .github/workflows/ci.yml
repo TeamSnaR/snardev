@@ -4,7 +4,15 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '**.md'
   pull_request:
+    paths-ignore:
+      - '**.md'
+
+env:
+  is-main-branch: ${{github.ref == 'refs/heads/main'}}
+  is-pull-request: ${{github.event_name == 'pull_request'}}
 
 jobs:
   main:
@@ -24,3 +32,15 @@ jobs:
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.2
     with:
       number-of-agents: 3
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-20.04
+    needs: [main]
+    if: ${{env.is-pull-request}} == 'true'
+
+    steps:
+      - name: Echo
+      - run: |
+          echo 'hello deploy'
+          ls ./dist/apps
