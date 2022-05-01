@@ -11,8 +11,8 @@ on:
       - '**.md'
 
 env:
-  is-main-branch: ${{github.ref == 'refs/heads/main'}}
-  is-pull-request: ${{github.event_name == 'pull_request'}}
+  IS_MAIN_BRANCH: ${{ github.ref == 'refs/heads/main' }}
+  IS_PULL_REQUEST: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   main:
@@ -36,8 +36,8 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-20.04
+    if: ${{ env.IS_PULL_REQUEST == 'true' }}
     needs: [main]
-    if: ${{env.is-pull-request == 'true'}}
 
     steps:
       - name: Echo
