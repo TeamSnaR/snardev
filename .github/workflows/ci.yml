@@ -36,11 +36,11 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-20.04
-    if: ${{ env.IS_PULL_REQUEST == 'true' }}
     needs: [main]
 
     steps:
       - name: Echo
+        if: ${{env.IS_PULL_REQUEST == 'true'}}
         run: |
           echo 'hello deploy'
           ls ./dist/apps
