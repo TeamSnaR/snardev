@@ -34,7 +34,6 @@ jobs:
       number-of-agents: 3
 
   build:
-    if: ${{env.IS_PULL_REQUEST == 'true'}}
     runs-on: ubuntu-20.04
     needs: [main]
 
@@ -51,11 +50,11 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn nx affected --target=build --parallel=3
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2.2.4
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3.0.0
         with:
-          name: ${{ secrets.PPS_ARTIFACT }}
-          path: dist
+          name: apps
+          path: dist/apps
           if-no-files-found: error
           retention-days: 1
 
