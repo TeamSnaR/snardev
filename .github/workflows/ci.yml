@@ -31,7 +31,7 @@ jobs:
         ls ./dist/apps
   pr:
     runs-on: ubuntu-latest
-    if: ${{ env.IS_PULL_REQUEST == 'true' }}
+    if: ${{ github.event_name == 'pull_request' }}
     needs: [main]
     steps:
       - uses: actions/checkout@v2
