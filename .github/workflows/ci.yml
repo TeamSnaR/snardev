@@ -33,14 +33,40 @@ jobs:
     with:
       number-of-agents: 3
 
-  deploy:
-    name: Deploy
+  build:
+    if: ${{env.IS_PULL_REQUEST == 'true'}}
     runs-on: ubuntu-20.04
     needs: [main]
 
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
-      - name: Echo
-        if: ${{env.IS_PULL_REQUEST == 'true'}}
-        run: |
-          echo 'hello deploy'
-          ls ./dist/apps
+      - name: Checkout PPS code
+        uses: actions/checkout@v2.4.0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - run: yarn nx affected --target=build --parallel=3
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: ${{ secrets.PPS_ARTIFACT }}
+          path: dist
+          if-no-files-found: error
+          retention-days: 1
+
+  # deploy:
+  #   name: Deploy
+  #   runs-on: ubuntu-20.04
+  #   needs: [main]
+
+  #   steps:
+  #     - name: Echo
+  #       if: ${{env.IS_PULL_REQUEST == 'true'}}
+  #       run: |
+  #         echo 'hello deploy'
+  #         ls ./dist/apps
