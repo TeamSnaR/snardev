@@ -1,14 +1,14 @@
 name: Main CI
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  #   paths-ignore:
-  #     - '**.md'
-  # pull_request:
-  #   paths-ignore:
-  #     - '**.md'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
   workflow_dispatch:
 
 env:
@@ -29,6 +29,24 @@ jobs:
         yarn nx affected --target=build --parallel=3
       final-commands: |
         ls ./dist/apps
+  pr:
+    runs-on: ubuntu-latest
+    if: ${{ env.IS_PULL_REQUEST == 'true' }}
+    needs: [main]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - run: yarn install --frozen-lockfile
+      - run: yarn nx-cloud start-ci-run
+      - run: yarn nx affected --target=build --parallel --max-parallel=3
+      - run: yarn nx-cloud stop-all-agents
   agents:
     name: Nx Cloud - Agents
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.2
