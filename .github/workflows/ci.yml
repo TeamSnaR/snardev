@@ -27,21 +27,21 @@ jobs:
         yarn nx affected --target=test --parallel=3 --ci --code-coverage
         yarn nx affected --target=build --parallel=3
       final-commands: |
-        ls
+        ls -l ./dist/apps
   agents:
     name: Nx Cloud - Agents
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.2
     with:
       number-of-agents: 3
 
-  # deploy:
-  #   name: Deploy
-  #   runs-on: ubuntu-20.04
-  #   needs: [main]
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-20.04
+    needs: [main]
 
-  #   steps:
-  #     - name: Echo
-  #       if: ${{env.IS_PULL_REQUEST == 'true'}}
-  #       run: |
-  #         echo 'hello deploy'
-  #         ls ./dist/apps
+    steps:
+      - name: Echo
+        if: ${{env.IS_PULL_REQUEST == 'true'}}
+        run: |
+          echo 'hello deploy'
+          ls ./dist/apps
