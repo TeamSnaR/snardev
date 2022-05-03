@@ -185,7 +185,7 @@ jobs:
           source: ${{env.ARTIFACTS_NAME}}
           target: ${{secrets.DESTINATION_TMP_DIR}}
           rm: true
-      - name: Deploy app bits
+      - name: Deploy app bits to dest
         uses: appleboy/ssh-action@v0.1.4
         with:
           # ssh host
