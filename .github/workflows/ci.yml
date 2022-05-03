@@ -1,57 +1,153 @@
-name: Main CI
-
+name: CI
 on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '**.md'
   pull_request:
-    paths-ignore:
-      - '**.md'
-  workflow_dispatch:
 
 env:
-  IS_MAIN_BRANCH: ${{ github.ref == 'refs/heads/main' }}
-  IS_PULL_REQUEST: ${{ github.event_name == 'pull_request' }}
+  NX_CLOUD_DISTRIBUTED_EXECUTION: true
+  ARTIFACTS_NAME: apps-artifacts
 
 jobs:
   main:
-    name: Nx Cloud - Main Job
-    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.2
-    with:
-      parallel-commands: |
-        yarn nx-cloud record -- yarn nx workspace-lint
-        yarn nx-cloud record -- yarn nx format:check
-      parallel-commands-on-agents: |
-        yarn nx affected --target=lint --parallel=3
-        yarn nx affected --target=test --parallel=3 --ci --code-coverage
-        yarn nx affected --target=build --parallel=3
-      final-commands: |
-        ls ./dist/apps
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout [main]
+        with:
+          fetch-depth: 0
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+      - name: Detect package manager
+        id: package_manager
+        run: |
+          echo "::set-output name=name::$([[ -f ./yarn.lock ]] && echo "yarn" || ([[ -f ./pnpm-lock.yaml ]] && echo "pnpm") || echo "npm")"
+      # Set node/npm/yarn versions using volta, with optional overrides provided by the consumer
+      - uses: volta-cli/action@fdf4cf319494429a105efaa71d0e5ec67f338c6e
+        # with:
+        #   node-version: "${{ inputs.node-version }}"
+        #   npm-version: "${{ inputs.npm-version }}"
+        #   yarn-version: "${{ inputs.yarn-version }}"
+      - name: Print node/npm/yarn versions
+        id: versions
+        run: |
+          node_ver=$( node --version )
+          yarn_ver=$( yarn --version || true )
+          pnpm_ver=$( pnpm --version || true )
+          echo "Node: ${node_ver:1}"
+          echo "NPM: $( npm --version )"
+          if [[ $yarn_ver != '' ]]; then echo "Yarn: $yarn_ver"; fi
+          if [[ $pnpm_ver != '' ]]; then echo "PNPM: $pnpm_ver"; fi
+          echo "::set-output name=node_version::${node_ver:1}"
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Use the node_modules cache if available [yarn]
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-yarn-
+      - name: Install dependencies
+        run: |
+          if [ -n "${{ inputs.install-command }}" ]; then
+            echo "Running custom install-command: ${{ inputs.install-command }}"
+            ${{ inputs.install-command }}
+          elif [ "${{ steps.package_manager.outputs.name == 'yarn' }}" == "true" ]; then
+            echo "Running yarn install --frozen-lockfile"
+            yarn install --frozen-lockfile
+          elif [ "${{ steps.package_manager.outputs.name == 'pnpm' }}" == "true" ]; then
+            echo "Running pnpm install --frozen-lockfile"
+            pnpm install --frozen-lockfile
+          else
+            echo "Running npm ci"
+            npm ci
+          fi
+      - run: yarn nx-cloud start-ci-run
+      - run: |
+          yarn nx-cloud record -- yarn nx workspace-lint
+          yarn nx-cloud record -- yarn nx format:check
+      - run: |
+          yarn nx affected --target=lint --parallel=3
+          yarn nx affected --target=test --parallel=3 --ci --code-coverage
+          yarn nx affected --target=build --parallel=3
+      - run: yarn nx-cloud stop-all-agents
   pr:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
-    needs: [main]
     steps:
       - uses: actions/checkout@v2
+        name: Checkout [pr]
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
-      - uses: actions/setup-node@v1
+      - name: Detect package manager
+        id: package_manager
+        run: |
+          echo "::set-output name=name::$([[ -f ./yarn.lock ]] && echo "yarn" || ([[ -f ./pnpm-lock.yaml ]] && echo "pnpm") || echo "npm")"
+      # Set node/npm/yarn versions using volta, with optional overrides provided by the consumer
+      - uses: volta-cli/action@fdf4cf319494429a105efaa71d0e5ec67f338c6e
+        # with:
+        #   node-version: "${{ inputs.node-version }}"
+        #   npm-version: "${{ inputs.npm-version }}"
+        #   yarn-version: "${{ inputs.yarn-version }}"
+      - name: Print node/npm/yarn versions
+        id: versions
+        run: |
+          node_ver=$( node --version )
+          yarn_ver=$( yarn --version || true )
+          pnpm_ver=$( pnpm --version || true )
+          echo "Node: ${node_ver:1}"
+          echo "NPM: $( npm --version )"
+          if [[ $yarn_ver != '' ]]; then echo "Yarn: $yarn_ver"; fi
+          if [[ $pnpm_ver != '' ]]; then echo "PNPM: $pnpm_ver"; fi
+          echo "::set-output name=node_version::${node_ver:1}"
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Use the node_modules cache if available [yarn]
+        uses: actions/cache@v2
         with:
-          node-version: '16'
-      - run: yarn install --frozen-lockfile
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-yarn-
+      - name: Install dependencies
+        run: |
+          if [ -n "${{ inputs.install-command }}" ]; then
+            echo "Running custom install-command: ${{ inputs.install-command }}"
+            ${{ inputs.install-command }}
+          elif [ "${{ steps.package_manager.outputs.name == 'yarn' }}" == "true" ]; then
+            echo "Running yarn install --frozen-lockfile"
+            yarn install --frozen-lockfile
+          elif [ "${{ steps.package_manager.outputs.name == 'pnpm' }}" == "true" ]; then
+            echo "Running pnpm install --frozen-lockfile"
+            pnpm install --frozen-lockfile
+          else
+            echo "Running npm ci"
+            npm ci
+          fi
       - run: yarn nx-cloud start-ci-run
-      - run: yarn nx affected --target=build --parallel=3
+      - run: |
+          yarn nx-cloud record -- yarn nx workspace-lint
+          yarn nx-cloud record -- yarn nx format:check
+      - run: |
+          yarn nx affected --target=lint --parallel=3
+          yarn nx affected --target=test --parallel=3 --ci --code-coverage
+          yarn nx affected --target=build --parallel=3
       - run: yarn nx-cloud stop-all-agents
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3.0.0
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: affected_apps
-          path: dist
+          name: ${{env.ARTIFACTS_NAME}}
+          path: dist/apps
           if-no-files-found: error
           retention-days: 1
   agents:
@@ -59,3 +155,47 @@ jobs:
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.2
     with:
       number-of-agents: 3
+
+  deploy:
+    runs-on: ubuntu-20.04
+    needs: pr
+    name: Deploy
+    defaults:
+      run:
+        working-directory: ${{env.ARTIFACTS_NAME}}
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{env.ARTIFACTS_NAME}}
+          path: ${{env.ARTIFACTS_NAME}}
+      - name: Display structure of downloaded files
+        run: ls -R
+      - name: Upload to staging
+        uses: appleboy/scp-action@master
+        with:
+          # ssh host
+          host: ${{secrets.DESTINATION_HOST}}
+          # ssh port
+          port: ${{secrets.DESTINATION_PORT}}
+          # ssh username
+          username: ${{secrets.DEPLOYER_USER}}
+          # ssh password
+          password: ${{secrets.DEPLOYER_PW}}
+          source: ${{env.ARTIFACTS_NAME}}
+          target: ${{secrets.DESTINATION_TMP_DIR}}
+          rm: true
+      - name: Deploy app bits
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          # ssh host
+          host: ${{secrets.DESTINATION_HOST}}
+          # ssh port
+          port: ${{secrets.DESTINATION_PORT}}
+          # ssh username
+          username: ${{secrets.DEPLOYER_USER}}
+          # ssh password
+          password: ${{secrets.DEPLOYER_PW}}
+          script_stop: true
+          script: |
+            ${{secrets.DEPLOY_APPS_SCRIPT}}
