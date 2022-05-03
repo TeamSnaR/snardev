@@ -8,6 +8,6 @@
 
 # Snardev
 
-This project was generated using [Nx](https://nx.dev)..
+This project was generated using [Nx](https://nx.dev).
 
 ## Foodie fixins app
