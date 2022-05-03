@@ -35,14 +35,29 @@
       "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "e2eTestRunner": "cypress",
+      "strict": true,
+      "tags": "type:app",
+      "addTailwind": true,
+      "inlineStyle": true,
+      "inlineTemplate": true,
+      "routing": true,
+      "viewEncapsulation": "None"
     },
     "@nrwl/angular:library": {
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "simpleModuleName": true
     },
     "@nrwl/angular:component": {
-      "style": "scss"
+      "style": "scss",
+      "displayBlock": true,
+      "changeDetection": "OnPush",
+      "viewEncapsulation": "None",
+      "flat": true,
+      "inlineStyle": true,
+      "inlineTemplate": true,
+      "skipTests": true
     }
   },
   "defaultProject": "foodie-app"
