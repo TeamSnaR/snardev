@@ -1,24 +1,24 @@
 {
   "projectType": "application",
-  "root": "apps/foodiefixins",
-  "sourceRoot": "apps/foodiefixins/src",
+  "root": "apps/foodie-app",
+  "sourceRoot": "apps/foodie-app/src",
   "prefix": "snardev",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/foodiefixins",
-        "index": "apps/foodiefixins/src/index.html",
-        "main": "apps/foodiefixins/src/main.ts",
-        "polyfills": "apps/foodiefixins/src/polyfills.ts",
-        "tsConfig": "apps/foodiefixins/tsconfig.app.json",
+        "outputPath": "dist/apps/foodie-app",
+        "index": "apps/foodie-app/src/index.html",
+        "main": "apps/foodie-app/src/main.ts",
+        "polyfills": "apps/foodie-app/src/polyfills.ts",
+        "tsConfig": "apps/foodie-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/foodiefixins/src/favicon.ico",
-          "apps/foodiefixins/src/assets"
+          "apps/foodie-app/src/favicon.ico",
+          "apps/foodie-app/src/assets"
         ],
-        "styles": ["apps/foodiefixins/src/styles.scss"],
+        "styles": ["apps/foodie-app/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -37,8 +37,8 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/foodiefixins/src/environments/environment.ts",
-              "with": "apps/foodiefixins/src/environments/environment.prod.ts"
+              "replace": "apps/foodie-app/src/environments/environment.ts",
+              "with": "apps/foodie-app/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all"
@@ -58,10 +58,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "foodiefixins:build:production"
+          "browserTarget": "foodie-app:build:production"
         },
         "development": {
-          "browserTarget": "foodiefixins:build:development"
+          "browserTarget": "foodie-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -69,26 +69,26 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "foodiefixins:build"
+        "browserTarget": "foodie-app:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "apps/foodiefixins/**/*.ts",
-          "apps/foodiefixins/**/*.html"
+          "apps/foodie-app/**/*.ts",
+          "apps/foodie-app/**/*.html"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/foodiefixins"],
+      "outputs": ["coverage/apps/foodie-app"],
       "options": {
-        "jestConfig": "apps/foodiefixins/jest.config.ts",
+        "jestConfig": "apps/foodie-app/jest.config.ts",
         "passWithNoTests": true
       }
     }
   },
-  "tags": []
+  "tags": ["type:app"]
 }

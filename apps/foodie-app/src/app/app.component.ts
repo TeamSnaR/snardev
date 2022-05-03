@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'snardev-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: ` <snardev-nx-welcome></snardev-nx-welcome> `,
+  styles: [],
 })
 export class AppComponent {
-  title = 'foodiefixins';
+  title = 'foodie-app';
 }

@@ -1,7 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "foodiefixins": "apps/foodiefixins",
-    "foodiefixins-e2e": "apps/foodiefixins-e2e"
+    "foodie-app": "apps/foodie-app",
+    "foodie-app-e2e": "apps/foodie-app-e2e"
   }
 }
