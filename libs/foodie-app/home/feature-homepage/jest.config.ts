@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'home-feature-homepage',
-  preset: '../../../jest.preset.ts',
+  displayName: 'foodie-app-home-feature-homepage',
+  preset: '../../../../jest.preset.ts',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -8,7 +8,8 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/home/feature-homepage',
+  coverageDirectory:
+    '../../../../coverage/libs/foodie-app/home/feature-homepage',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
