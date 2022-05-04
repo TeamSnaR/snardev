@@ -25,7 +25,7 @@ import { of } from 'rxjs';
                   <ng-container *ngFor="let item of items$ | async">
                     <a
                       routerLink="{{ item.link }}"
-                      routerLinkActive="bg-indigo-700 text-white"
+                      routerLinkActive="bg-indigo-700"
                       class="hover:bg-indigo-500 hover:bg-opacity-75 text-white px-3 py-2 rounded-md text-sm font-medium"
                       aria-current="page"
                       >{{ item.name }}</a
@@ -187,7 +187,7 @@ import { of } from 'rxjs';
             <ng-container *ngFor="let item of items$ | async">
               <a
                 routerLink="{{ item.link }}"
-                routerLinkActive="bg-indigo-700 text-white"
+                routerLinkActive="bg-indigo-700"
                 class="text-white block px-3 py-2 rounded-md text-base font-medium"
                 aria-current="page"
                 >{{ item.name }}</a
@@ -255,20 +255,9 @@ import { of } from 'rxjs';
         </div>
       </nav>
 
-      <header class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-          <h1 class="text-lg leading-6 font-semibold text-gray-900">Home</h1>
-        </div>
-      </header>
-      <main>
-        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <!-- Replace with your content -->
-          <div class="px-4 py-4 sm:px-0">
-            <router-outlet></router-outlet>
-          </div>
-          <!-- /End replace -->
-        </div>
-      </main>
+      <snardev-layout-page>
+        <router-outlet></router-outlet>
+      </snardev-layout-page>
     </div>
   `,
   styles: [
