@@ -13,8 +13,8 @@ const appRoutes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('@snardev/home/feature-shell').then(
-            (module) => module.HomeFeatureShellModule
+          import('@snardev/foodie-app-home-feature-shell').then(
+            (module) => module.FoodieAppHomeFeatureShellModule
           ),
         data: { title: 'Foodie Fixins - Home' },
       },

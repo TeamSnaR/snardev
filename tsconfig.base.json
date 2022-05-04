@@ -21,11 +21,13 @@
       "@snardev/favorites/feature-shell": [
         "libs/favorites/feature-shell/src/index.ts"
       ],
+      "@snardev/foodie-app-home-feature-shell": [
+        "libs/foodie-app/home/feature-shell/src/index.ts"
+      ],
       "@snardev/foodie-app-shell": ["libs/foodie-app/shell/src/index.ts"],
       "@snardev/home/feature-homepage": [
         "libs/home/feature-homepage/src/index.ts"
       ],
-      "@snardev/home/feature-shell": ["libs/home/feature-shell/src/index.ts"],
       "@snardev/recipes/feature-list": [
         "libs/recipes/feature-list/src/index.ts"
       ],

@@ -12,4 +12,4 @@ import { HomepageComponent } from '@snardev/home/feature-homepage';
     ]),
   ],
 })
-export class HomeFeatureShellModule {}
+export class FoodieAppHomeFeatureShellModule {}
