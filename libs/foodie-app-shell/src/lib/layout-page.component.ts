@@ -17,11 +17,7 @@ import { LayoutPageStore } from './layout-page.store';
     </header>
     <main>
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <!-- Replace with your content -->
-        <div class="px-4 py-4 sm:px-0">
-          <ng-content></ng-content>
-        </div>
-        <!-- /End replace -->
+        <ng-content></ng-content>
       </div>
     </main>
   `,
