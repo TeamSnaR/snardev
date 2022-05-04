@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { LayoutPageComponent } from './layout-page.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 const appRoutes: Routes = [
   {
@@ -49,6 +50,11 @@ const appRoutes: Routes = [
       },
     ],
   },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+    data: { title: 'Foodie Fixins - Page Not Found' },
+  },
 ];
 
 const routingSettings: ExtraOptions = {
@@ -60,6 +66,6 @@ const routingSettings: ExtraOptions = {
 @NgModule({
   imports: [CommonModule, RouterModule.forRoot(appRoutes, routingSettings)],
   exports: [RouterModule],
-  declarations: [LayoutComponent, LayoutPageComponent],
+  declarations: [LayoutComponent, LayoutPageComponent, PageNotFoundComponent],
 })
 export class FoodieAppShellModule {}
