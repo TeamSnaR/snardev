@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "foodie-app": "apps/foodie-app",
-    "foodie-app-e2e": "apps/foodie-app-e2e"
+    "foodie-app-e2e": "apps/foodie-app-e2e",
+    "foodie-app-shell": "libs/foodie-app-shell"
   }
 }
