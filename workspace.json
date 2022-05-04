@@ -1,9 +1,9 @@
 {
   "version": 2,
   "projects": {
-    "favorites-feature-list": "libs/favorites/feature-list",
     "foodie-app": "apps/foodie-app",
     "foodie-app-e2e": "apps/foodie-app-e2e",
+    "foodie-app-favorites-feature-list": "libs/foodie-app/favorites/feature-list",
     "foodie-app-favorites-feature-shell": "libs/foodie-app/favorites/feature-shell",
     "foodie-app-home-feature-homepage": "libs/foodie-app/home/feature-homepage",
     "foodie-app-home-feature-shell": "libs/foodie-app/home/feature-shell",

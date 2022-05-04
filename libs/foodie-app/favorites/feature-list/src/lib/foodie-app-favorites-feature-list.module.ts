@@ -6,4 +6,4 @@ import { FavoritesListComponent } from './favorites-list.component';
   imports: [CommonModule],
   declarations: [FavoritesListComponent],
 })
-export class FavoritesFeatureListModule {}
+export class FoodieAppFavoritesFeatureListModule {}
