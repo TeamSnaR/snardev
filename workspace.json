@@ -7,6 +7,8 @@
     "home-feature-homepage": "libs/home/feature-homepage",
     "home-feature-shell": "libs/home/feature-shell",
     "recipes-feature-list": "libs/recipes/feature-list",
-    "recipes-feature-shell": "libs/recipes/feature-shell"
+    "recipes-feature-shell": "libs/recipes/feature-shell",
+    "shopping-list-feature-list": "libs/shopping-list/feature-list",
+    "shopping-list-feature-shell": "libs/shopping-list/feature-shell"
   }
 }

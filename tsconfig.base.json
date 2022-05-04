@@ -25,6 +25,12 @@
       ],
       "@snardev/recipes/feature-shell": [
         "libs/recipes/feature-shell/src/index.ts"
+      ],
+      "@snardev/shopping-list/feature-list": [
+        "libs/shopping-list/feature-list/src/index.ts"
+      ],
+      "@snardev/shopping-list/feature-shell": [
+        "libs/shopping-list/feature-shell/src/index.ts"
       ]
     }
   },
