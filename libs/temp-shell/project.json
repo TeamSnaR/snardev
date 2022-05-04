@@ -1,14 +1,14 @@
 {
   "projectType": "library",
-  "root": "libs/foodie-app-shell",
-  "sourceRoot": "libs/foodie-app-shell/src",
+  "root": "libs/temp-shell",
+  "sourceRoot": "libs/temp-shell/src",
   "prefix": "snardev",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/foodie-app-shell"],
+      "outputs": ["coverage/libs/temp-shell"],
       "options": {
-        "jestConfig": "libs/foodie-app-shell/jest.config.ts",
+        "jestConfig": "libs/temp-shell/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -16,8 +16,8 @@
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "libs/foodie-app-shell/**/*.ts",
-          "libs/foodie-app-shell/**/*.html"
+          "libs/temp-shell/**/*.ts",
+          "libs/temp-shell/**/*.html"
         ]
       }
     }

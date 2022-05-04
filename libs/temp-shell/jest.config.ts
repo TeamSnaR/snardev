@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'foodie-app-shell',
+  displayName: 'temp-shell',
   preset: '../../jest.preset.ts',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/libs/foodie-app-shell',
+  coverageDirectory: '../../coverage/libs/temp-shell',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

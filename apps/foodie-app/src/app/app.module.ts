@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { FoodieAppShellModule } from '@snardev/foodie-app-shell';
+import { TempShellModule } from '@snardev/temp-shell';
 import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, FoodieAppShellModule],
+  imports: [BrowserModule, TempShellModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -21,7 +21,6 @@
       "@snardev/favorites/feature-shell": [
         "libs/favorites/feature-shell/src/index.ts"
       ],
-      "@snardev/foodie-app-shell": ["libs/foodie-app-shell/src/index.ts"],
       "@snardev/home/feature-homepage": [
         "libs/home/feature-homepage/src/index.ts"
       ],
@@ -37,7 +36,8 @@
       ],
       "@snardev/shopping-list/feature-shell": [
         "libs/shopping-list/feature-shell/src/index.ts"
-      ]
+      ],
+      "@snardev/temp-shell": ["libs/temp-shell/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -62,4 +62,4 @@ const routingSettings: ExtraOptions = {
   exports: [RouterModule],
   declarations: [LayoutComponent, LayoutPageComponent],
 })
-export class FoodieAppShellModule {}
+export class TempShellModule {}
