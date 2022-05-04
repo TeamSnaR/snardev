@@ -8,8 +8,9 @@ export interface LayoutPageState {
   pageTitle: string;
 }
 
+const DEFAULT_TITLE = 'Foodie Fixins';
 const DEFAULT_STATE = {
-  pageTitle: '',
+  pageTitle: DEFAULT_TITLE,
 };
 
 @Injectable({ providedIn: 'any' })
