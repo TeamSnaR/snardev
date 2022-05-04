@@ -12,4 +12,4 @@ import { RecipesListComponent } from '@snardev/recipes/feature-list';
     ]),
   ],
 })
-export class RecipesFeatureShellModule {}
+export class FoodieAppRecipesFeatureShellModule {}

@@ -21,8 +21,8 @@ const appRoutes: Routes = [
       {
         path: 'recipes',
         loadChildren: () =>
-          import('@snardev/recipes/feature-shell').then(
-            (module) => module.RecipesFeatureShellModule
+          import('@snardev/foodie-app-recipes-feature-shell').then(
+            (module) => module.FoodieAppRecipesFeatureShellModule
           ),
         data: { title: 'Foodie Fixins - Recipes' },
       },

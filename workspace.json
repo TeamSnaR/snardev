@@ -7,9 +7,9 @@
     "foodie-app-e2e": "apps/foodie-app-e2e",
     "foodie-app-home-feature-homepage": "libs/foodie-app/home/feature-homepage",
     "foodie-app-home-feature-shell": "libs/foodie-app/home/feature-shell",
+    "foodie-app-recipes-feature-shell": "libs/foodie-app/recipes/feature-shell",
     "foodie-app-shell": "libs/foodie-app/shell",
     "recipes-feature-list": "libs/recipes/feature-list",
-    "recipes-feature-shell": "libs/recipes/feature-shell",
     "shopping-list-feature-list": "libs/shopping-list/feature-list",
     "shopping-list-feature-shell": "libs/shopping-list/feature-shell"
   }
