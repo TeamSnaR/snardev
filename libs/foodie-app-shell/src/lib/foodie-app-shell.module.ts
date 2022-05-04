@@ -7,7 +7,15 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    children: [],
+    children: [
+      {
+        path: 'home',
+        loadChildren: () =>
+          import('@snardev/home/feature-shell').then(
+            (module) => module.HomeFeatureShellModule
+          ),
+      },
+    ],
   },
 ];
 

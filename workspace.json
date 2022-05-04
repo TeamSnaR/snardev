@@ -3,6 +3,8 @@
   "projects": {
     "foodie-app": "apps/foodie-app",
     "foodie-app-e2e": "apps/foodie-app-e2e",
-    "foodie-app-shell": "libs/foodie-app-shell"
+    "foodie-app-shell": "libs/foodie-app-shell",
+    "home-feature-homepage": "libs/home/feature-homepage",
+    "home-feature-shell": "libs/home/feature-shell"
   }
 }

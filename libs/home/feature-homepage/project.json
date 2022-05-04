@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/home/feature-homepage",
+  "sourceRoot": "libs/home/feature-homepage/src",
+  "prefix": "snardev",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/home/feature-homepage"],
+      "options": {
+        "jestConfig": "libs/home/feature-homepage/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/home/feature-homepage/**/*.ts",
+          "libs/home/feature-homepage/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
