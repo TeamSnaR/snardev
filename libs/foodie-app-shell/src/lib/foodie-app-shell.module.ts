@@ -35,6 +35,14 @@ const appRoutes: Routes = [
         data: { title: 'Foodie Fixins - Shopping List' },
       },
       {
+        path: 'favorites',
+        loadChildren: () =>
+          import('@snardev/favorites/feature-shell').then(
+            (module) => module.FavoritesFeatureShellModule
+          ),
+        data: { title: 'Foodie Fixins - Favorites' },
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'home',
