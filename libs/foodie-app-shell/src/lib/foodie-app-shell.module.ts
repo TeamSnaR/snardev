@@ -8,6 +8,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    data: { title: 'Foodie Fixins' },
     children: [
       {
         path: 'home',
@@ -15,7 +16,7 @@ const appRoutes: Routes = [
           import('@snardev/home/feature-shell').then(
             (module) => module.HomeFeatureShellModule
           ),
-        data: { title: 'Home' },
+        data: { title: 'Foodie Fixins - Home' },
       },
       {
         path: '',

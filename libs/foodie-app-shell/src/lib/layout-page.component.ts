@@ -1,21 +1,9 @@
 import {
   Component,
-  OnInit,
   ViewEncapsulation,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  filter,
-  interval,
-  map,
-  Observable,
-  of,
-  Subject,
-  tap,
-} from 'rxjs';
+import { LayoutPageStore } from './layout-page.store';
 
 @Component({
   selector: 'snardev-layout-page',
@@ -48,32 +36,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutPageComponent {
-  routerEvent$ = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    map(() => {
-      let route: ActivatedRoute = this.router.routerState.root;
+  public pageTitle$ = this.layoutPageStore.pageTitle$;
 
-      let routeTitle = '';
-      while (route?.firstChild) {
-        route = route.firstChild;
-      }
-      if (route.snapshot.data['title']) {
-        routeTitle = route?.snapshot.data['title'];
-      }
-      return routeTitle;
-    })
-  );
-  public pageTitle$ = new BehaviorSubject<string>('');
-
-  constructor(
-    private readonly router: Router,
-    private readonly titleService: Title
-  ) {
-    this.routerEvent$.subscribe((routeTitle) => {
-      if (routeTitle) {
-        this.titleService.setTitle(routeTitle);
-        this.pageTitle$.next(routeTitle);
-      }
-    });
+  constructor(private readonly layoutPageStore: LayoutPageStore) {
+    this.layoutPageStore.getPageTitle();
   }
 }
