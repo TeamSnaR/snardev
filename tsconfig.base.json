@@ -18,8 +18,8 @@
       "@snardev/favorites/feature-list": [
         "libs/favorites/feature-list/src/index.ts"
       ],
-      "@snardev/favorites/feature-shell": [
-        "libs/favorites/feature-shell/src/index.ts"
+      "@snardev/foodie-app-favorites-feature-shell": [
+        "libs/foodie-app/favorites/feature-shell/src/index.ts"
       ],
       "@snardev/foodie-app-home-feature-homepage": [
         "libs/foodie-app/home/feature-homepage/src/index.ts"

@@ -37,8 +37,8 @@ const appRoutes: Routes = [
       {
         path: 'favorites',
         loadChildren: () =>
-          import('@snardev/favorites/feature-shell').then(
-            (module) => module.FavoritesFeatureShellModule
+          import('@snardev/foodie-app-favorites-feature-shell').then(
+            (module) => module.FoodieAppFavoritesFeatureShellModule
           ),
         data: { title: 'Foodie Fixins - Favorites' },
       },

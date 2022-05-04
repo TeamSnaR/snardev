@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'favorites-feature-shell',
-  preset: '../../../jest.preset.ts',
+  displayName: 'foodie-app-favorites-feature-shell',
+  preset: '../../../../jest.preset.ts',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -8,7 +8,8 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/favorites/feature-shell',
+  coverageDirectory:
+    '../../../../coverage/libs/foodie-app/favorites/feature-shell',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

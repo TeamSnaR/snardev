@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/foodie-app/favorites/feature-shell",
+  "sourceRoot": "libs/foodie-app/favorites/feature-shell/src",
+  "prefix": "snardev",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/foodie-app/favorites/feature-shell"],
+      "options": {
+        "jestConfig": "libs/foodie-app/favorites/feature-shell/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/foodie-app/favorites/feature-shell/**/*.ts",
+          "libs/foodie-app/favorites/feature-shell/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["type:feature", "scope:foodie-app"]
+}

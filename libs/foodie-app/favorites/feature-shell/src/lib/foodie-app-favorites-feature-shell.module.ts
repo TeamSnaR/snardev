@@ -12,4 +12,4 @@ import { FavoritesListComponent } from '@snardev/favorites/feature-list';
     ]),
   ],
 })
-export class FavoritesFeatureShellModule {}
+export class FoodieAppFavoritesFeatureShellModule {}
