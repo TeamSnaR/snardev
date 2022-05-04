@@ -13,7 +13,7 @@ const appRoutes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('@snardev/foodie-app-home-feature-shell').then(
+          import('@snardev/foodie-app/home/feature-shell').then(
             (module) => module.FoodieAppHomeFeatureShellModule
           ),
         data: { title: 'Foodie Fixins - Home' },
@@ -21,7 +21,7 @@ const appRoutes: Routes = [
       {
         path: 'recipes',
         loadChildren: () =>
-          import('@snardev/foodie-app-recipes-feature-shell').then(
+          import('@snardev/foodie-app/recipes/feature-shell').then(
             (module) => module.FoodieAppRecipesFeatureShellModule
           ),
         data: { title: 'Foodie Fixins - Recipes' },
@@ -29,7 +29,7 @@ const appRoutes: Routes = [
       {
         path: 'shopping-list',
         loadChildren: () =>
-          import('@snardev/foodie-app-shopping-list-feature-shell').then(
+          import('@snardev/foodie-app/shopping-list/feature-shell').then(
             (module) => module.FoodieAppShoppingListFeatureShellModule
           ),
         data: { title: 'Foodie Fixins - Shopping List' },
@@ -37,7 +37,7 @@ const appRoutes: Routes = [
       {
         path: 'favorites',
         loadChildren: () =>
-          import('@snardev/foodie-app-favorites-feature-shell').then(
+          import('@snardev/foodie-app/favorites/feature-shell').then(
             (module) => module.FoodieAppFavoritesFeatureShellModule
           ),
         data: { title: 'Foodie Fixins - Favorites' },
