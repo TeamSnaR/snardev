@@ -6,4 +6,4 @@ import { ShoppingListComponent } from './shopping-list.component';
   imports: [CommonModule],
   declarations: [ShoppingListComponent],
 })
-export class ShoppingListFeatureListModule {}
+export class FoodieAppShoppingListFeatureListModule {}

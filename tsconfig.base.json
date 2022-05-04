@@ -34,11 +34,11 @@
         "libs/foodie-app/recipes/feature-shell/src/index.ts"
       ],
       "@snardev/foodie-app-shell": ["libs/foodie-app/shell/src/index.ts"],
+      "@snardev/foodie-app-shopping-list-feature-list": [
+        "libs/foodie-app/shopping-list/feature-list/src/index.ts"
+      ],
       "@snardev/foodie-app-shopping-list-feature-shell": [
         "libs/foodie-app/shopping-list/feature-shell/src/index.ts"
-      ],
-      "@snardev/shopping-list/feature-list": [
-        "libs/shopping-list/feature-list/src/index.ts"
       ]
     }
   },
