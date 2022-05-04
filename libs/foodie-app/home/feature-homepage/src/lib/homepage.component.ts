@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   ViewEncapsulation,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -18,8 +17,4 @@ import {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomepageComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class HomepageComponent {}
