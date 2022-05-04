@@ -19,7 +19,13 @@
       "@snardev/home/feature-homepage": [
         "libs/home/feature-homepage/src/index.ts"
       ],
-      "@snardev/home/feature-shell": ["libs/home/feature-shell/src/index.ts"]
+      "@snardev/home/feature-shell": ["libs/home/feature-shell/src/index.ts"],
+      "@snardev/recipes/feature-list": [
+        "libs/recipes/feature-list/src/index.ts"
+      ],
+      "@snardev/recipes/feature-shell": [
+        "libs/recipes/feature-shell/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
