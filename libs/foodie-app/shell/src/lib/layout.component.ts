@@ -26,6 +26,7 @@ import { of } from 'rxjs';
                     <a
                       routerLink="{{ item.link }}"
                       routerLinkActive="bg-indigo-700"
+                      [routerLinkActiveOptions]="{ exact: true }"
                       class="hover:bg-indigo-500 hover:bg-opacity-75 text-white px-3 py-2 rounded-md text-sm font-medium"
                       aria-current="page"
                       >{{ item.name }}</a
@@ -275,7 +276,7 @@ export class LayoutComponent {
   items$ = of([
     {
       name: 'Home',
-      link: '/home',
+      link: './',
     },
     {
       name: 'Recipes',
