@@ -10,7 +10,7 @@
     "foodie-app-recipes-feature-list": "libs/foodie-app/recipes/feature-list",
     "foodie-app-recipes-feature-shell": "libs/foodie-app/recipes/feature-shell",
     "foodie-app-shell": "libs/foodie-app/shell",
-    "shopping-list-feature-list": "libs/shopping-list/feature-list",
-    "shopping-list-feature-shell": "libs/shopping-list/feature-shell"
+    "foodie-app-shopping-list-feature-shell": "libs/foodie-app/shopping-list/feature-shell",
+    "shopping-list-feature-list": "libs/shopping-list/feature-list"
   }
 }

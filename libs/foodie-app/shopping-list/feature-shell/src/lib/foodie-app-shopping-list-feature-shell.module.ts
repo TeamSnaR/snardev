@@ -12,4 +12,4 @@ import { ShoppingListComponent } from '@snardev/shopping-list/feature-list';
     ]),
   ],
 })
-export class ShoppingListFeatureShellModule {}
+export class FoodieAppShoppingListFeatureShellModule {}

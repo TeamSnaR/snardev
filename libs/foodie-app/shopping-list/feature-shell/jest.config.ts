@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'shopping-list-feature-shell',
-  preset: '../../../jest.preset.ts',
+  displayName: 'foodie-app-shopping-list-feature-shell',
+  preset: '../../../../jest.preset.ts',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -8,7 +8,8 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/shopping-list/feature-shell',
+  coverageDirectory:
+    '../../../../coverage/libs/foodie-app/shopping-list/feature-shell',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

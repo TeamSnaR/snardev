@@ -29,8 +29,8 @@ const appRoutes: Routes = [
       {
         path: 'shopping-list',
         loadChildren: () =>
-          import('@snardev/shopping-list/feature-shell').then(
-            (module) => module.ShoppingListFeatureShellModule
+          import('@snardev/foodie-app-shopping-list-feature-shell').then(
+            (module) => module.FoodieAppShoppingListFeatureShellModule
           ),
         data: { title: 'Foodie Fixins - Shopping List' },
       },
