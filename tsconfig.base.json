@@ -27,13 +27,13 @@
       "@snardev/foodie-app-home-feature-shell": [
         "libs/foodie-app/home/feature-shell/src/index.ts"
       ],
+      "@snardev/foodie-app-recipes-feature-list": [
+        "libs/foodie-app/recipes/feature-list/src/index.ts"
+      ],
       "@snardev/foodie-app-recipes-feature-shell": [
         "libs/foodie-app/recipes/feature-shell/src/index.ts"
       ],
       "@snardev/foodie-app-shell": ["libs/foodie-app/shell/src/index.ts"],
-      "@snardev/recipes/feature-list": [
-        "libs/recipes/feature-list/src/index.ts"
-      ],
       "@snardev/shopping-list/feature-list": [
         "libs/shopping-list/feature-list/src/index.ts"
       ],

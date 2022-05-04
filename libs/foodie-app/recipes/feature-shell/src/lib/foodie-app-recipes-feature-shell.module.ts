@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { RecipesListComponent } from '@snardev/recipes/feature-list';
+import { RecipesListComponent } from '@snardev/foodie-app-recipes-feature-list';
 
 @NgModule({
   imports: [

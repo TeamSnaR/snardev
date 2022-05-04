@@ -6,4 +6,4 @@ import { RecipesListComponent } from './recipes-list.component';
   imports: [CommonModule],
   declarations: [RecipesListComponent],
 })
-export class RecipesFeatureListModule {}
+export class FoodieAppRecipesFeatureListModule {}

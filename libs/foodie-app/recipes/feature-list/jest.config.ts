@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'recipes-feature-list',
-  preset: '../../../jest.preset.ts',
+  displayName: 'foodie-app-recipes-feature-list',
+  preset: '../../../../jest.preset.ts',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -8,7 +8,8 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../../coverage/libs/recipes/feature-list',
+  coverageDirectory:
+    '../../../../coverage/libs/foodie-app/recipes/feature-list',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
