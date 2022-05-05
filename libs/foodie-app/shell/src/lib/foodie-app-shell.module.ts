@@ -4,6 +4,7 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { LayoutPageComponent } from './layout-page.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { SelectivePreloadingStrategyService } from '@snardev/shared/utils/selective-preloading-strategy';
 
 const appRoutes: Routes = [
   {
@@ -25,7 +26,7 @@ const appRoutes: Routes = [
           import('@snardev/foodie-app/recipes/feature-shell').then(
             (module) => module.FoodieAppRecipesFeatureShellModule
           ),
-        data: { title: 'Foodie Fixins - Recipes' },
+        data: { title: 'Foodie Fixins - Recipes', preload: true },
       },
       {
         path: 'shopping-list',
@@ -56,6 +57,7 @@ const routingSettings: ExtraOptions = {
   initialNavigation: 'enabledBlocking',
   scrollPositionRestoration: 'top',
   paramsInheritanceStrategy: 'always',
+  preloadingStrategy: SelectivePreloadingStrategyService,
 };
 
 @NgModule({

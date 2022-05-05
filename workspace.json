@@ -11,6 +11,7 @@
     "foodie-app-recipes-feature-shell": "libs/foodie-app/recipes/feature-shell",
     "foodie-app-shell": "libs/foodie-app/shell",
     "foodie-app-shopping-list-feature-list": "libs/foodie-app/shopping-list/feature-list",
-    "foodie-app-shopping-list-feature-shell": "libs/foodie-app/shopping-list/feature-shell"
+    "foodie-app-shopping-list-feature-shell": "libs/foodie-app/shopping-list/feature-shell",
+    "shared-utils-selective-preloading-strategy": "libs/shared/utils/selective-preloading-strategy"
   }
 }
