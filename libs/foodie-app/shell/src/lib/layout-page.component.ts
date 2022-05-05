@@ -17,9 +17,13 @@ import { LayoutPageStore } from './layout-page.store';
         </h1>
       </div>
     </header>
-    <main [@routeAnimation]="getAnimationData()">
+    <main>
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <ng-content></ng-content>
+        <div class="px-4 py-4 sm:px-0">
+          <div [@routeAnimation]="getAnimationData()">
+            <ng-content></ng-content>
+          </div>
+        </div>
       </div>
     </main>
   `,
