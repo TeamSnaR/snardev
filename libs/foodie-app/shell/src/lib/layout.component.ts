@@ -189,6 +189,7 @@ import { of } from 'rxjs';
               <a
                 routerLink="{{ item.link }}"
                 routerLinkActive="bg-indigo-700"
+                [routerLinkActiveOptions]="{ exact: true }"
                 class="text-white block px-3 py-2 rounded-md text-base font-medium"
                 aria-current="page"
                 >{{ item.name }}</a
