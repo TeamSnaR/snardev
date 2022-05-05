@@ -3,6 +3,8 @@ import {
   ViewEncapsulation,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { ChildrenOutletContexts } from '@angular/router';
+import { routeSlideInAnimation } from '@snardev/shared/utils/route-slide-in-animation';
 import { LayoutPageStore } from './layout-page.store';
 
 @Component({
@@ -15,7 +17,7 @@ import { LayoutPageStore } from './layout-page.store';
         </h1>
       </div>
     </header>
-    <main>
+    <main [@routeAnimation]="getAnimationData()">
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <ng-content></ng-content>
       </div>
@@ -30,11 +32,21 @@ import { LayoutPageStore } from './layout-page.store';
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [routeSlideInAnimation],
 })
 export class LayoutPageComponent {
   public pageTitle$ = this.layoutPageStore.pageTitle$;
 
-  constructor(private readonly layoutPageStore: LayoutPageStore) {
+  constructor(
+    private readonly layoutPageStore: LayoutPageStore,
+    private readonly contexts: ChildrenOutletContexts
+  ) {
     this.layoutPageStore.getPageTitle();
+  }
+
+  getAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.[
+      'animation'
+    ];
   }
 }

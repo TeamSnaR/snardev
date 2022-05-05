@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout.component';
 import { LayoutPageComponent } from './layout-page.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SelectivePreloadingStrategyService } from '@snardev/shared/utils/selective-preloading-strategy';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
   {
@@ -18,7 +19,7 @@ const appRoutes: Routes = [
           import('@snardev/foodie-app/home/feature-shell').then(
             (module) => module.FoodieAppHomeFeatureShellModule
           ),
-        data: { title: 'Foodie Fixins - Home' },
+        data: { title: 'Foodie Fixins - Home', animation: 'homePage' },
       },
       {
         path: 'recipes',
@@ -26,7 +27,11 @@ const appRoutes: Routes = [
           import('@snardev/foodie-app/recipes/feature-shell').then(
             (module) => module.FoodieAppRecipesFeatureShellModule
           ),
-        data: { title: 'Foodie Fixins - Recipes', preload: true },
+        data: {
+          title: 'Foodie Fixins - Recipes',
+          preload: true,
+          animation: 'recipesPage',
+        },
       },
       {
         path: 'shopping-list',
@@ -34,7 +39,10 @@ const appRoutes: Routes = [
           import('@snardev/foodie-app/shopping-list/feature-shell').then(
             (module) => module.FoodieAppShoppingListFeatureShellModule
           ),
-        data: { title: 'Foodie Fixins - Shopping List' },
+        data: {
+          title: 'Foodie Fixins - Shopping List',
+          animation: 'shoppingListPage',
+        },
       },
       {
         path: 'favorites',
@@ -42,7 +50,10 @@ const appRoutes: Routes = [
           import('@snardev/foodie-app/favorites/feature-shell').then(
             (module) => module.FoodieAppFavoritesFeatureShellModule
           ),
-        data: { title: 'Foodie Fixins - Favorites' },
+        data: {
+          title: 'Foodie Fixins - Favorites',
+          animation: 'favoritesPage',
+        },
       },
     ],
   },
@@ -61,7 +72,11 @@ const routingSettings: ExtraOptions = {
 };
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forRoot(appRoutes, routingSettings)],
+  imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(appRoutes, routingSettings),
+  ],
   exports: [RouterModule],
   declarations: [LayoutComponent, LayoutPageComponent, PageNotFoundComponent],
 })

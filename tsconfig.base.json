@@ -40,6 +40,9 @@
       "@snardev/foodie-app/shopping-list/feature-shell": [
         "libs/foodie-app/shopping-list/feature-shell/src/index.ts"
       ],
+      "@snardev/shared/utils/route-slide-in-animation": [
+        "libs/shared/utils/route-slide-in-animation/src/index.ts"
+      ],
       "@snardev/shared/utils/selective-preloading-strategy": [
         "libs/shared/utils/selective-preloading-strategy/src/index.ts"
       ]

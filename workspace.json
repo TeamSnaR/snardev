@@ -12,6 +12,7 @@
     "foodie-app-shell": "libs/foodie-app/shell",
     "foodie-app-shopping-list-feature-list": "libs/foodie-app/shopping-list/feature-list",
     "foodie-app-shopping-list-feature-shell": "libs/foodie-app/shopping-list/feature-shell",
+    "shared-utils-route-slide-in-animation": "libs/shared/utils/route-slide-in-animation",
     "shared-utils-selective-preloading-strategy": "libs/shared/utils/selective-preloading-strategy"
   }
 }
