@@ -6,6 +6,7 @@ import { LayoutPageComponent } from './layout-page.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SelectivePreloadingStrategyService } from '@snardev/shared/utils/selective-preloading-strategy';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FooterComponent } from './footer.component';
 
 const appRoutes: Routes = [
   {
@@ -78,6 +79,11 @@ const routingSettings: ExtraOptions = {
     RouterModule.forRoot(appRoutes, routingSettings),
   ],
   exports: [RouterModule],
-  declarations: [LayoutComponent, LayoutPageComponent, PageNotFoundComponent],
+  declarations: [
+    LayoutComponent,
+    LayoutPageComponent,
+    PageNotFoundComponent,
+    FooterComponent,
+  ],
 })
 export class FoodieAppShellModule {}

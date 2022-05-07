@@ -259,6 +259,7 @@ import { of } from 'rxjs';
       <snardev-layout-page>
         <router-outlet></router-outlet>
       </snardev-layout-page>
+      <snardev-footer></snardev-footer>
     </div>
   `,
   styles: [
