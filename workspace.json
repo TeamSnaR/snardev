@@ -13,6 +13,8 @@
     "foodie-app-shopping-list-feature-list": "libs/foodie-app/shopping-list/feature-list",
     "foodie-app-shopping-list-feature-shell": "libs/foodie-app/shopping-list/feature-shell",
     "shared-utils-route-slide-in-animation": "libs/shared/utils/route-slide-in-animation",
-    "shared-utils-selective-preloading-strategy": "libs/shared/utils/selective-preloading-strategy"
+    "shared-utils-selective-preloading-strategy": "libs/shared/utils/selective-preloading-strategy",
+    "split-app": "apps/split-app",
+    "split-app-e2e": "apps/split-app-e2e"
   }
 }

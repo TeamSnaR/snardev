@@ -16,6 +16,7 @@
     "affected:dep-graph": "nx affected:dep-graph",
     "dev:foodie:app": "nx serve foodie-app",
     "build:foodie:app": "nx build foodie-app",
+    "dev:split:app": "nx serve split-app",
     "postinstall": "ngcc --properties es2015 browser module main"
   },
   "private": true,
@@ -32,6 +33,7 @@
     "@nrwl/angular": "14.0.3",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",
+    "uuid": "^8.3.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -51,6 +53,7 @@
     "@nrwl/workspace": "14.0.3",
     "@types/jest": "27.4.1",
     "@types/node": "16.11.7",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "~5.18.0",
     "@typescript-eslint/parser": "~5.18.0",
     "autoprefixer": "^10.4.0",
