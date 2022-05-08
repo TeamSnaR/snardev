@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
+import { Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 export type AmountType = 'fixed' | 'percent';
@@ -99,7 +100,7 @@ export function getPercentDiscount(
 ): Addendum {
   return {
     id: uuidv4(),
-    description,
+    description: `${description} (${rate * 100}%)`,
     rate,
     amount: 0,
     amountType: 'percent',
@@ -112,7 +113,7 @@ export function getFixedDiscount(
 ): Addendum {
   return {
     id: uuidv4(),
-    description,
+    description: `${description} (${rate})`,
     rate,
     amount: 0,
     amountType: 'fixed',
@@ -126,7 +127,7 @@ export function getPercentCharge(
 ): Addendum {
   return {
     id: uuidv4(),
-    description,
+    description: `${description} (${rate * 100}%)`,
     rate,
     amount: 0,
     amountType: 'percent',
@@ -140,7 +141,7 @@ export function getFixedCharge(
 ): Addendum {
   return {
     id: uuidv4(),
-    description,
+    description: `${description} (${rate})`,
     rate,
     amount: 0,
     amountType: 'fixed',
@@ -152,73 +153,105 @@ export function getBillSubtotal(bill: BillState): number {
   return bill.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 }
 
+export function getBillGrandTotal(
+  bill: BillState,
+  addendums: Addendum[]
+): number {
+  const subTotal = getBillSubtotal(bill);
+  return addendums.reduce((acc, addendum) => acc + addendum.amount, subTotal);
+}
+
+export function getPerItemRate(bill: BillState, addendums: Addendum[]): number {
+  const billTotal = getBillGrandTotal(bill, addendums);
+  return addendums
+    .filter((addendum) => addendum.type === 'add')
+    .reduce((acc, charge) => {
+      const rate =
+        charge.amountType === 'fixed'
+          ? (charge.rate * 100) / billTotal
+          : charge.rate;
+
+      return acc + rate;
+    }, 0);
+}
+
+export function getBillItemAmountWithCharges(
+  billItem: BillItem,
+  perItemRate: number
+): number {
+  return (billItem.price + billItem.price * perItemRate) * billItem.quantity;
+}
+
 @Injectable({
   providedIn: 'any',
 })
 export class SplitStore extends ComponentStore<SplitState> {
-  readonly bill$ = this.select((state) => state.bill);
-  readonly error$ = this.select((state) => state.error);
-  readonly addendums$ = this.select((state) => {
-    const subTotal = getBillSubtotal(state.bill);
-    return state.bill.addendums.reduce((acc, addendum) => {
-      // extra charge
+  readonly subTotal$ = this.select((state) => getBillSubtotal(state.bill));
+  readonly addendums$ = this.select(
+    this.state$,
+    this.subTotal$,
+    (state, subTotal) => {
+      return state.bill.addendums
+        .reduce((acc, addendum) => {
+          if (addendum.type === 'add') {
+            addendum.amount =
+              addendum.amountType === 'percent'
+                ? subTotal * addendum.rate
+                : addendum.rate;
+            acc.push(addendum);
+          } else if (addendum.type === 'deduct') {
+            addendum.amount =
+              (addendum.amountType === 'percent'
+                ? subTotal * addendum.rate
+                : addendum.rate) * -1;
+            acc.push(addendum);
+          }
 
-      if (addendum.type === 'add') {
-        addendum.amount =
-          addendum.amountType === 'percent'
-            ? subTotal * addendum.rate
-            : addendum.rate;
-        acc.push(addendum);
-      } else if (addendum.type === 'deduct') {
-        addendum.amount =
-          (addendum.amountType === 'percent'
-            ? subTotal * addendum.rate
-            : addendum.rate) * -1;
-        acc.push(addendum);
-      }
-
-      return acc;
-    }, [] as Addendum[]);
-  });
-  readonly billDiscounts$ = this.select(this.addendums$, (addendums) => {
-    const discounts = addendums.filter(
-      (addendum) => addendum.type === 'deduct'
-    );
-    const total = discounts.reduce((acc, discount) => acc + discount.amount, 0);
-    return {
-      discounts,
-      total,
-    };
-  });
-  readonly billExtraCharges$ = this.select(this.addendums$, (addendums) => {
-    const extraCharges = addendums.filter(
-      (addendum) => addendum.type === 'add'
-    );
-    const total = extraCharges.reduce((acc, charge) => acc + charge.amount, 0);
-    return {
-      extraCharges,
-      total,
-    };
-  });
-  vm$ = this.select(
-    this.bill$,
-    this.error$,
-    this.addendums$,
-    (bill, error, addendums) => {
-      const subTotal = getBillSubtotal(bill);
-      return {
-        bill,
-        billItems: bill.items,
-        addendums: addendums.sort((a, b) => b.amount - a.amount),
-        subTotal,
-        grandTotal: addendums.reduce(
-          (acc, addendum) => acc + addendum.amount,
-          subTotal
-        ),
-        error,
-      };
+          return acc;
+        }, [] as Addendum[])
+        .sort((a, b) => b.amount - a.amount);
     }
   );
+  readonly grandTotal$ = this.select(
+    this.state$,
+    this.addendums$,
+    (state, addendums) => getBillGrandTotal(state.bill, addendums)
+  );
+  readonly perItemRate$ = this.select(
+    this.state$,
+    this.addendums$,
+    (state, addendums) => getPerItemRate(state.bill, addendums)
+  );
+  readonly calculations$ = this.select(
+    this.subTotal$,
+    this.grandTotal$,
+    this.perItemRate$,
+    (subTotal, grandTotal, perItemRate) => ({
+      subTotal,
+      grandTotal,
+      perItemRate,
+    })
+  );
+  readonly bill$: Observable<
+    BillState & { grandTotal: number; subTotal: number; perItemRate: number }
+  > = this.select(
+    this.state$,
+    this.addendums$,
+    this.calculations$,
+    (state, addendums, calculations) => ({
+      ...state.bill,
+      addendums,
+      grandTotal: calculations.grandTotal,
+      subTotal: calculations.subTotal,
+      perItemRate: calculations.perItemRate,
+    })
+  );
+
+  readonly error$ = this.select((state) => state.error);
+  vm$ = this.select(this.bill$, this.error$, (bill, error) => ({
+    bill,
+    error,
+  }));
   constructor() {
     super(DEFAULT_STATE);
   }

@@ -20,6 +20,5 @@ import { SplitStore } from './split.store.service';
 })
 export class SplitFormComponent {
   readonly vm$ = this.splitStore.vm$;
-  readonly billExtraCharges$ = this.splitStore.billExtraCharges$;
   constructor(private readonly splitStore: SplitStore) {}
 }
