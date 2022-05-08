@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
-import { RouterModule } from '@angular/router';
+import { FoodieAppShellModule } from '@snardev/foodie-app/shell';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, FoodieAppShellModule],
   providers: [],
   bootstrap: [AppComponent],
 })

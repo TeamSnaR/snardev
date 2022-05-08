@@ -14,7 +14,39 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@snardev/foodie-app/favorites/feature-list": [
+        "libs/foodie-app/favorites/feature-list/src/index.ts"
+      ],
+      "@snardev/foodie-app/favorites/feature-shell": [
+        "libs/foodie-app/favorites/feature-shell/src/index.ts"
+      ],
+      "@snardev/foodie-app/home/feature-homepage": [
+        "libs/foodie-app/home/feature-homepage/src/index.ts"
+      ],
+      "@snardev/foodie-app/home/feature-shell": [
+        "libs/foodie-app/home/feature-shell/src/index.ts"
+      ],
+      "@snardev/foodie-app/recipes/feature-list": [
+        "libs/foodie-app/recipes/feature-list/src/index.ts"
+      ],
+      "@snardev/foodie-app/recipes/feature-shell": [
+        "libs/foodie-app/recipes/feature-shell/src/index.ts"
+      ],
+      "@snardev/foodie-app/shell": ["libs/foodie-app/shell/src/index.ts"],
+      "@snardev/foodie-app/shopping-list/feature-list": [
+        "libs/foodie-app/shopping-list/feature-list/src/index.ts"
+      ],
+      "@snardev/foodie-app/shopping-list/feature-shell": [
+        "libs/foodie-app/shopping-list/feature-shell/src/index.ts"
+      ],
+      "@snardev/shared/utils/route-slide-in-animation": [
+        "libs/shared/utils/route-slide-in-animation/src/index.ts"
+      ],
+      "@snardev/shared/utils/selective-preloading-strategy": [
+        "libs/shared/utils/selective-preloading-strategy/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

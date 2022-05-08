@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/shared/utils/selective-preloading-strategy",
+  "sourceRoot": "libs/shared/utils/selective-preloading-strategy/src",
+  "prefix": "snardev",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/utils/selective-preloading-strategy"],
+      "options": {
+        "jestConfig": "libs/shared/utils/selective-preloading-strategy/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/utils/selective-preloading-strategy/**/*.ts",
+          "libs/shared/utils/selective-preloading-strategy/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

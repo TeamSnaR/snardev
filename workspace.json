@@ -2,6 +2,17 @@
   "version": 2,
   "projects": {
     "foodie-app": "apps/foodie-app",
-    "foodie-app-e2e": "apps/foodie-app-e2e"
+    "foodie-app-e2e": "apps/foodie-app-e2e",
+    "foodie-app-favorites-feature-list": "libs/foodie-app/favorites/feature-list",
+    "foodie-app-favorites-feature-shell": "libs/foodie-app/favorites/feature-shell",
+    "foodie-app-home-feature-homepage": "libs/foodie-app/home/feature-homepage",
+    "foodie-app-home-feature-shell": "libs/foodie-app/home/feature-shell",
+    "foodie-app-recipes-feature-list": "libs/foodie-app/recipes/feature-list",
+    "foodie-app-recipes-feature-shell": "libs/foodie-app/recipes/feature-shell",
+    "foodie-app-shell": "libs/foodie-app/shell",
+    "foodie-app-shopping-list-feature-list": "libs/foodie-app/shopping-list/feature-list",
+    "foodie-app-shopping-list-feature-shell": "libs/foodie-app/shopping-list/feature-shell",
+    "shared-utils-route-slide-in-animation": "libs/shared/utils/route-slide-in-animation",
+    "shared-utils-selective-preloading-strategy": "libs/shared/utils/selective-preloading-strategy"
   }
 }

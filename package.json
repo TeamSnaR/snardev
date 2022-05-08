@@ -14,8 +14,8 @@
     "affected:e2e": "nx affected:e2e",
     "affected:test": "nx affected:test",
     "affected:dep-graph": "nx affected:dep-graph",
-    "dev:foodie:app": "nx serve foodiefixins",
-    "build:foodie:app": "nx build foodiefixins",
+    "dev:foodie:app": "nx serve foodie-app",
+    "build:foodie:app": "nx build foodie-app",
     "postinstall": "ngcc --properties es2015 browser module main"
   },
   "private": true,
@@ -28,6 +28,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@ngrx/component-store": "^13.2.0",
     "@nrwl/angular": "14.0.3",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",
