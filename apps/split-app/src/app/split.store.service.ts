@@ -1,38 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ComponentStore } from '@ngrx/component-store';
-import { Observable } from 'rxjs';
+import { ComponentStore, tapResponse } from '@ngrx/component-store';
+import {
+  concatMap,
+  Observable,
+  of,
+  pipe,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
-
-export type AmountType = 'fixed' | 'percent';
-export type AddendumType = 'add' | 'deduct';
-
-export interface BillItem {
-  id: string;
-  description: string;
-  quantity: number;
-  price: number;
-}
-
-export interface Addendum {
-  id: string;
-  description: string;
-  rate: number;
-  amount: number;
-  amountType: AmountType;
-  type: AddendumType;
-}
-
-export interface BillState {
-  id: string;
-  description: string;
-  currency: string;
-  items: BillItem[];
-  addendums: Addendum[];
-}
+import { Addendum, BillItem, BillState } from './models';
 
 export interface SplitState {
   bill: BillState;
   error: string;
+  showModal: boolean;
 }
 
 const DEFAULT_CURRENCY = 'RM';
@@ -92,6 +75,7 @@ const DEFAULT_BILL_STATE: BillState = {
 const DEFAULT_STATE: SplitState = {
   bill: DEFAULT_BILL_STATE,
   error: '',
+  showModal: false,
 };
 
 export function getPercentDiscount(
@@ -248,11 +232,39 @@ export class SplitStore extends ComponentStore<SplitState> {
   );
 
   readonly error$ = this.select((state) => state.error);
-  vm$ = this.select(this.bill$, this.error$, (bill, error) => ({
-    bill,
-    error,
-  }));
+  vm$ = this.select(
+    this.state$,
+    this.bill$,
+    this.error$,
+    (state, bill, error) => ({
+      bill,
+      error,
+      showModal: state.showModal,
+    })
+  );
   constructor() {
     super(DEFAULT_STATE);
+  }
+  saveBillItem = this.effect<BillItem>(
+    pipe(
+      tap(() => this.closeModal()),
+      tap((billItem) => {
+        const { bill } = this.get();
+        this.patchState({
+          bill: {
+            ...bill,
+            items: [...bill.items, billItem],
+          },
+        });
+      })
+    )
+  );
+
+  closeModal() {
+    this.patchState({ showModal: false });
+  }
+
+  addItem() {
+    this.patchState({ showModal: true });
   }
 }

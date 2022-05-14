@@ -3,8 +3,12 @@ import {
   OnInit,
   ViewEncapsulation,
   ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { FormArray } from '@angular/forms';
+import { BillItem, BillItemFormModel } from './models';
 import { SplitFormPresenter } from './split-form.presenter';
 
 @Component({
@@ -22,25 +26,30 @@ import { SplitFormPresenter } from './split-form.presenter';
   viewProviders: [SplitFormPresenter],
 })
 export class SplitFormUiComponent {
-  get billForm() {
-    return this.splitFormPresenter.splitForm;
+  @Input()
+  formShow!: boolean;
+  @Output()
+  formClose = new EventEmitter<BillItem | null>();
+  get billItemForm() {
+    return this.splitFormPresenter.billItemForm;
   }
 
   get billItems() {
-    return this.billForm.controls['items'] as FormArray;
+    return this.billItemForm.controls['items'] as FormArray;
   }
+
   constructor(private readonly splitFormPresenter: SplitFormPresenter) {}
 
-  addItem() {
-    this.splitFormPresenter.addItem();
-  }
-
-  removeItem(index: number) {
-    this.splitFormPresenter.removeItem(index);
-  }
-
   onSubmit() {
-    const billData = this.splitFormPresenter.save();
-    console.log(billData);
+    const billItem = this.splitFormPresenter.save();
+    if (billItem) {
+      this.formClose.emit(billItem);
+    } else {
+      return;
+    }
+  }
+
+  onCancel() {
+    this.formClose.emit();
   }
 }
