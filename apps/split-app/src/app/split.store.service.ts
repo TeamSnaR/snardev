@@ -250,6 +250,7 @@ export class SplitStore extends ComponentStore<SplitState> {
       tap(() => this.closeModal()),
       tap((billItem) => {
         const { bill } = this.get();
+        billItem.id = uuidv4();
         this.patchState({
           bill: {
             ...bill,

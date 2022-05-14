@@ -26,8 +26,15 @@ import { SplitFormPresenter } from './split-form.presenter';
   viewProviders: [SplitFormPresenter],
 })
 export class SplitFormUiComponent {
+  private _formShow!: boolean;
   @Input()
-  formShow!: boolean;
+  set formShow(value: boolean) {
+    this._formShow = value;
+    this.splitFormPresenter.reset();
+  }
+  get formShow() {
+    return this._formShow;
+  }
   @Output()
   formClose = new EventEmitter<BillItem | null>();
   get billItemForm() {
@@ -39,7 +46,6 @@ export class SplitFormUiComponent {
   }
 
   constructor(private readonly splitFormPresenter: SplitFormPresenter) {}
-
   onSubmit() {
     const billItem = this.splitFormPresenter.save();
     if (billItem) {
