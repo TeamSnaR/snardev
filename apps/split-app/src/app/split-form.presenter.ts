@@ -20,8 +20,8 @@ export class SplitFormPresenter {
       // cleanup
       const billItem = {
         description: billItemData.description,
-        quantity: billItemData.quantity,
-        price: billItemData.price,
+        quantity: +billItemData.quantity,
+        price: +billItemData.price,
       } as BillItem;
 
       return billItem;
