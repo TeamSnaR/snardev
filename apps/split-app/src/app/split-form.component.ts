@@ -24,7 +24,15 @@ export class SplitFormComponent {
   constructor(private readonly splitStore: SplitStore) {}
 
   addItem() {
-    this.splitStore.addItem();
+    this.splitStore.openModal();
+  }
+
+  addExtraCharge() {
+    this.splitStore.openModal('charge');
+  }
+
+  addDiscount() {
+    this.splitStore.openModal('discount');
   }
 
   onCloseModal(payload: BillItem | null) {

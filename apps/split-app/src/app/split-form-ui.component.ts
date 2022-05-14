@@ -8,7 +8,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { BillItem, BillItemFormModel } from './models';
+import { BillItem, BillItemFormModel, FormType } from './models';
 import { SplitFormPresenter } from './split-form.presenter';
 
 @Component({
@@ -35,6 +35,8 @@ export class SplitFormUiComponent {
   get formShow() {
     return this._formShow;
   }
+  @Input()
+  formType: FormType = 'item';
   @Output()
   formClose = new EventEmitter<BillItem | null>();
   get billItemForm() {

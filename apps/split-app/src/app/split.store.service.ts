@@ -10,12 +10,13 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
-import { Addendum, BillItem, BillState } from './models';
+import { Addendum, BillItem, BillState, FormType } from './models';
 
 export interface SplitState {
   bill: BillState;
   error: string;
   showModal: boolean;
+  formType: FormType;
 }
 
 const DEFAULT_CURRENCY = 'RM';
@@ -76,6 +77,7 @@ const DEFAULT_STATE: SplitState = {
   bill: DEFAULT_BILL_STATE,
   error: '',
   showModal: false,
+  formType: 'item',
 };
 
 export function getPercentDiscount(
@@ -240,6 +242,7 @@ export class SplitStore extends ComponentStore<SplitState> {
       bill,
       error,
       showModal: state.showModal,
+      formType: state.formType,
     })
   );
   constructor() {
@@ -260,6 +263,13 @@ export class SplitStore extends ComponentStore<SplitState> {
       })
     )
   );
+
+  openModal(formType: FormType = 'item') {
+    this.patchState({
+      showModal: true,
+      formType,
+    });
+  }
 
   closeModal() {
     this.patchState({ showModal: false });

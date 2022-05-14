@@ -1,6 +1,8 @@
 export type AmountType = 'fixed' | 'percent';
 export type AddendumType = 'add' | 'deduct';
 
+export type FormType = 'item' | 'charge' | 'discount';
+
 export interface BillItem {
   id: string;
   description: string;
