@@ -11,7 +11,10 @@
             <time datetime="2022-04-29">April 29, 2022</time>
           </p>
         </div>
-        <div class="mt-4 space-x-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        <div
+          class="mt-4 space-x-4 sm:mt-0 sm:ml-16 sm:flex-none"
+          *ngIf="vm.hasItems"
+        >
           <button
             (click)="addItem()"
             type="button"
@@ -51,47 +54,69 @@
         </div>
       </div>
       <div class="-mx-4 mt-8 flex flex-col sm:-mx-6 md:mx-0">
-        <table class="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr>
-              <th
-                scope="col"
-                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0"
+        <ng-container *ngIf="vm.hasItems; else noItems">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0"
+                >
+                  Item
+                </th>
+                <th
+                  scope="col"
+                  class="hidden py-3.5 px-3 text-right text-sm font-semibold text-gray-900 sm:table-cell"
+                >
+                  Quantity
+                </th>
+                <th
+                  scope="col"
+                  class="hidden py-3.5 px-3 text-right text-sm font-semibold text-gray-900 sm:table-cell"
+                >
+                  Price
+                </th>
+                <th
+                  scope="col"
+                  class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0"
+                >
+                  Amount
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="border-b border-gray-200"
+                *ngFor="let item of vm.bill.items"
               >
-                Item
-              </th>
-              <th
-                scope="col"
-                class="hidden py-3.5 px-3 text-right text-sm font-semibold text-gray-900 sm:table-cell"
-              >
-                Quantity
-              </th>
-              <th
-                scope="col"
-                class="hidden py-3.5 px-3 text-right text-sm font-semibold text-gray-900 sm:table-cell"
-              >
-                Price
-              </th>
-              <th
-                scope="col"
-                class="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0"
-              >
-                Amount
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              class="border-b border-gray-200"
-              *ngFor="let item of vm.bill.items"
-            >
-              <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
-                <div class="font-medium text-gray-900">
-                  {{ item.description }}
-                </div>
-                <div class="mt-0.5 text-gray-500 sm:hidden">
-                  {{ item.quantity }} at
-                  {{ item.price | currency: vm.bill.currency }} each
+                <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
+                  <div class="font-medium text-gray-900">
+                    {{ item.description }}
+                  </div>
+                  <div class="mt-0.5 text-gray-500 sm:hidden">
+                    {{ item.quantity }} at
+                    {{ item.price | currency: vm.bill.currency }} each
+                    <p
+                      class="text-xs text-green-600"
+                      *ngIf="vm.bill.perItemRate > 0"
+                    >
+                      + charges
+                      {{
+                        item.price * vm.bill.perItemRate
+                          | currency: vm.bill.currency
+                      }}
+                    </p>
+                  </div>
+                </td>
+                <td
+                  class="hidden py-4 px-3 text-right text-sm text-gray-500 sm:table-cell"
+                >
+                  {{ item.quantity }}
+                </td>
+                <td
+                  class="hidden py-4 px-3 text-right text-sm text-gray-500 sm:table-cell"
+                >
+                  {{ item.price | currency: vm.bill.currency }}
                   <p
                     class="text-xs text-green-600"
                     *ngIf="vm.bill.perItemRate > 0"
@@ -102,111 +127,91 @@
                         | currency: vm.bill.currency
                     }}
                   </p>
-                </div>
-              </td>
-              <td
-                class="hidden py-4 px-3 text-right text-sm text-gray-500 sm:table-cell"
-              >
-                {{ item.quantity }}
-              </td>
-              <td
-                class="hidden py-4 px-3 text-right text-sm text-gray-500 sm:table-cell"
-              >
-                {{ item.price | currency: vm.bill.currency }}
-                <p
-                  class="text-xs text-green-600"
-                  *ngIf="vm.bill.perItemRate > 0"
+                </td>
+                <td
+                  class="py-4 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
                 >
-                  + charges
-                  {{
-                    item.price * vm.bill.perItemRate
-                      | currency: vm.bill.currency
-                  }}
-                </p>
-              </td>
-              <td
-                class="py-4 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
-              >
-                {{ item.price * item.quantity | currency: vm.bill.currency }}
-                <p
-                  class="text-xs text-green-600"
-                  *ngIf="vm.bill.perItemRate > 0"
-                >
-                  + charges
-                  {{
-                    item.quantity *
-                      (item.price + item.price * vm.bill.perItemRate)
-                      | currency: vm.bill.currency
-                  }}
-                </p>
-              </td>
-            </tr>
+                  {{ item.price * item.quantity | currency: vm.bill.currency }}
+                  <p
+                    class="text-xs text-green-600"
+                    *ngIf="vm.bill.perItemRate > 0"
+                  >
+                    + charges
+                    {{
+                      item.quantity *
+                        (item.price + item.price * vm.bill.perItemRate)
+                        | currency: vm.bill.currency
+                    }}
+                  </p>
+                </td>
+              </tr>
 
-            <!-- More items... -->
-          </tbody>
-          <tfoot>
-            <tr>
-              <th
-                scope="row"
-                colspan="3"
-                class="hidden pl-6 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell md:pl-0"
-              >
-                Subtotal
-              </th>
-              <th
-                scope="row"
-                class="pl-4 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden"
-              >
-                Subtotal
-              </th>
-              <td
-                class="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
-              >
-                {{ vm.bill.subTotal | currency: vm.bill.currency }}
-              </td>
-            </tr>
-            <tr *ngFor="let addendum of vm.bill.addendums">
-              <th
-                scope="row"
-                colspan="3"
-                class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell md:pl-0"
-              >
-                {{ addendum.description }}
-              </th>
-              <th
-                scope="row"
-                class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
-              >
-                {{ addendum.description }}
-              </th>
-              <td
-                class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
-              >
-                {{ addendum.amount | currency: vm.bill.currency }}
-              </td>
-            </tr>
-            <tr>
-              <th
-                scope="row"
-                colspan="3"
-                class="hidden pl-6 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell md:pl-0"
-              >
-                Total
-              </th>
-              <th
-                scope="row"
-                class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden"
-              >
-                Total
-              </th>
-              <td
-                class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0"
-              >
-                {{ vm.bill.grandTotal | currency: vm.bill.currency }}
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+              <!-- More items... -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <th
+                  scope="row"
+                  colspan="3"
+                  class="hidden pl-6 pr-3 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell md:pl-0"
+                >
+                  Subtotal
+                </th>
+                <th
+                  scope="row"
+                  class="pl-4 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden"
+                >
+                  Subtotal
+                </th>
+                <td
+                  class="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
+                >
+                  {{ vm.bill.subTotal | currency: vm.bill.currency }}
+                </td>
+              </tr>
+              <tr *ngFor="let addendum of vm.bill.addendums">
+                <th
+                  scope="row"
+                  colspan="3"
+                  class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell md:pl-0"
+                >
+                  {{ addendum.description }}
+                </th>
+                <th
+                  scope="row"
+                  class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
+                >
+                  {{ addendum.description }}
+                </th>
+                <td
+                  class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
+                >
+                  {{ addendum.amount | currency: vm.bill.currency }}
+                </td>
+              </tr>
+              <tr>
+                <th
+                  scope="row"
+                  colspan="3"
+                  class="hidden pl-6 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell md:pl-0"
+                >
+                  Total
+                </th>
+                <th
+                  scope="row"
+                  class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden"
+                >
+                  Total
+                </th>
+                <td
+                  class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0"
+                >
+                  {{ vm.bill.grandTotal | currency: vm.bill.currency }}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -215,5 +220,50 @@
   </p>
   <ng-template #loading>
     <p *ngIf="!vm.error">Loading...</p>
+  </ng-template>
+  <ng-template #noItems>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="text-center">
+      <svg
+        class="mx-auto h-12 w-12 text-gray-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          vector-effect="non-scaling-stroke"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+        />
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No items yet</h3>
+      <p class="mt-1 text-sm text-gray-500">Get started by adding a new item</p>
+      <div class="mt-6">
+        <button
+          (click)="addItem()"
+          type="button"
+          class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <!-- Heroicon name: solid/plus -->
+          <svg
+            class="-ml-1 mr-2 h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          New item
+        </button>
+      </div>
+    </div>
   </ng-template>
 </ng-container>

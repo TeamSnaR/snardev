@@ -103,6 +103,7 @@ export class SplitStore extends ComponentStore<SplitState> {
       error,
       showModal: state.showModal,
       formType: state.formType,
+      hasItems: bill.items.length > 0,
     })
   );
   constructor() {
