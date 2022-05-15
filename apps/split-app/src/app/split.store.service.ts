@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable, pipe, tap } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
 import { Addendum, BillItem, BillState, FormType } from './models';
 import { getBillSubtotal, getBillGrandTotal, getPerItemRate } from './utils';
 
@@ -18,52 +17,8 @@ const DEFAULT_BILL_STATE: BillState = {
   id: '',
   description: 'Bo and Banker bill',
   currency: DEFAULT_CURRENCY,
-  items: [
-    {
-      id: uuidv4(),
-      description: 'HH GUINNESS PINT',
-      quantity: 1,
-      price: 25,
-    },
-    {
-      id: uuidv4(),
-      description: 'HH TIGER PINT',
-      quantity: 1,
-      price: 25,
-    },
-    {
-      id: uuidv4(),
-      description: 'DUO WAGYU BEEF CHEESE CRONUT',
-      quantity: 1,
-      price: 58,
-    },
-    {
-      id: uuidv4(),
-      description: "BO'S SIGNATURE TRUFFLE FRIES",
-      quantity: 1,
-      price: 28,
-    },
-    {
-      id: uuidv4(),
-      description: 'FRIED BABY SQUID',
-      quantity: 3,
-      price: 36,
-    },
-    {
-      id: uuidv4(),
-      description: "HH GORDON'S X2",
-      quantity: 5,
-      price: 36,
-    },
-  ],
-  addendums: [
-    // getPercentDiscount('Loyalty discount', 0.5),
-    // getPercentCharge('Service charge', 10),
-    // getPercentCharge('SST', 6),
-    // getFixedDiscount('Voucher', 2),
-    // getFixedCharge('Delivery charge', 3),
-    // getFixedCharge('Sys rounding', 0.01),
-  ],
+  items: [],
+  addendums: [],
 };
 
 const DEFAULT_STATE: SplitState = {
@@ -155,17 +110,16 @@ export class SplitStore extends ComponentStore<SplitState> {
   }
   saveBillItem = this.effect<BillItem>(
     pipe(
-      tap(() => this.closeModal()),
       tap((billItem) => {
         const { bill } = this.get();
-        billItem.id = uuidv4();
         this.patchState({
           bill: {
             ...bill,
             items: [...bill.items, billItem],
           },
         });
-      })
+      }),
+      tap(() => this.closeModal())
     )
   );
 

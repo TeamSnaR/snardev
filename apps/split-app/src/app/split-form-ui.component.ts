@@ -58,8 +58,6 @@ export class SplitFormUiComponent {
   onSubmit() {
     const formData = this.splitFormPresenter.saveForm(this.formType);
     if (formData) {
-      console.log(formData);
-
       this.formClose.emit(formData);
     } else {
       return;

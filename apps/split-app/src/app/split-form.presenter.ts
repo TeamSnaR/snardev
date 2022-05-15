@@ -8,10 +8,11 @@ import {
   FormType,
 } from './models';
 import {
-  getFixedCharge,
-  getFixedDiscount,
-  getPercentCharge,
-  getPercentDiscount,
+  createBillItem,
+  createFixedCharge,
+  createFixedDiscount,
+  createPercentCharge,
+  createPercentDiscount,
 } from './utils';
 
 const DEFAULT_BILL_ITEM_STATE = {
@@ -64,12 +65,11 @@ export class SplitFormPresenter {
   }
 
   private mapToBillItem(formData: BillItemFormModel): BillItem {
-    return {
-      id: '',
-      description: formData.description,
-      quantity: +formData.quantity,
-      price: +formData.price,
-    };
+    return createBillItem(
+      formData.description,
+      +formData.price,
+      +formData.quantity
+    );
   }
 
   private mapToAddendum(
@@ -78,12 +78,12 @@ export class SplitFormPresenter {
   ): Addendum {
     if (formType === 'charge') {
       return formData.amountType === 'percent'
-        ? getPercentCharge(formData.description, +formData.rate)
-        : getFixedCharge(formData.description, +formData.rate);
+        ? createPercentCharge(formData.description, +formData.rate)
+        : createFixedCharge(formData.description, +formData.rate);
     } else {
       return formData.amountType === 'percent'
-        ? getPercentDiscount(formData.description, +formData.rate)
-        : getFixedDiscount(formData.description, +formData.rate);
+        ? createPercentDiscount(formData.description, +formData.rate)
+        : createFixedDiscount(formData.description, +formData.rate);
     }
   }
 
@@ -96,13 +96,19 @@ export class SplitFormPresenter {
   }
 
   private createBillItemForm(): FormGroup {
-    return this.formBuilder.group({
-      description: [DEFAULT_BILL_ITEM_STATE.description, [Validators.required]],
-      quantity: [
-        DEFAULT_BILL_ITEM_STATE.quantity,
-        [Validators.required, Validators.min(1)],
-      ],
-      price: [DEFAULT_BILL_ITEM_STATE.price, [Validators.required]],
-    });
+    return this.formBuilder.group(
+      {
+        description: [
+          DEFAULT_BILL_ITEM_STATE.description,
+          [Validators.required],
+        ],
+        quantity: [
+          DEFAULT_BILL_ITEM_STATE.quantity,
+          [Validators.required, Validators.min(1)],
+        ],
+        price: [DEFAULT_BILL_ITEM_STATE.price, [Validators.required]],
+      },
+      { updateOn: 'blur' }
+    );
   }
 }

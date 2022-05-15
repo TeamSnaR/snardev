@@ -92,7 +92,10 @@
                 <div class="mt-0.5 text-gray-500 sm:hidden">
                   {{ item.quantity }} at
                   {{ item.price | currency: vm.bill.currency }} each
-                  <p class="text-xs text-green-600">
+                  <p
+                    class="text-xs text-green-600"
+                    *ngIf="vm.bill.perItemRate > 0"
+                  >
                     + charges
                     {{
                       item.price * vm.bill.perItemRate
@@ -110,7 +113,10 @@
                 class="hidden py-4 px-3 text-right text-sm text-gray-500 sm:table-cell"
               >
                 {{ item.price | currency: vm.bill.currency }}
-                <p class="text-xs text-green-600">
+                <p
+                  class="text-xs text-green-600"
+                  *ngIf="vm.bill.perItemRate > 0"
+                >
                   + charges
                   {{
                     item.price * vm.bill.perItemRate
@@ -122,7 +128,10 @@
                 class="py-4 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
               >
                 {{ item.price * item.quantity | currency: vm.bill.currency }}
-                <p class="text-xs text-green-600">
+                <p
+                  class="text-xs text-green-600"
+                  *ngIf="vm.bill.perItemRate > 0"
+                >
                   + charges
                   {{
                     item.quantity *

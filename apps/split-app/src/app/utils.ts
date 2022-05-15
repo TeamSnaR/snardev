@@ -1,7 +1,7 @@
 import { Addendum, BillState, BillItem } from './models';
 import { v4 as uuidv4 } from 'uuid';
 
-export function getPercentDiscount(
+export function createPercentDiscount(
   description: string,
   rate: number = 0
 ): Addendum {
@@ -14,7 +14,7 @@ export function getPercentDiscount(
     type: 'discount',
   };
 }
-export function getFixedDiscount(
+export function createFixedDiscount(
   description: string,
   rate: number = 0
 ): Addendum {
@@ -28,7 +28,7 @@ export function getFixedDiscount(
   };
 }
 
-export function getPercentCharge(
+export function createPercentCharge(
   description: string,
   rate: number = 0
 ): Addendum {
@@ -42,7 +42,7 @@ export function getPercentCharge(
   };
 }
 
-export function getFixedCharge(
+export function createFixedCharge(
   description: string,
   rate: number = 0
 ): Addendum {
@@ -87,4 +87,17 @@ export function getBillItemAmountWithCharges(
   perItemRate: number
 ): number {
   return (billItem.price + billItem.price * perItemRate) * billItem.quantity;
+}
+
+export function createBillItem(
+  description: string,
+  price: number,
+  quantity: number
+) {
+  return {
+    id: uuidv4(),
+    description,
+    price,
+    quantity,
+  };
 }
