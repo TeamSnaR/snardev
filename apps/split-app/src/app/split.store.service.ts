@@ -2,16 +2,26 @@ import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable, pipe, tap } from 'rxjs';
 import { Addendum, BillItem, Bill, FormType } from './models';
-import { getBillSubtotal, getBillGrandTotal, getPerItemRate } from './utils';
+import {
+  getBillSubtotal,
+  getBillGrandTotal,
+  getPerItemRate,
+  CURRENCIES,
+  createBillItem,
+  createPercentDiscount,
+  createPercentCharge,
+  createBill,
+} from './utils';
 
 export interface SplitState {
   bill: Bill;
   error: string;
   showModal: boolean;
   formType: FormType;
+  formData: Bill | Addendum | BillItem | null;
 }
 
-const DEFAULT_CURRENCY = 'RM';
+const DEFAULT_CURRENCY = CURRENCIES[0].value;
 
 const DEFAULT_BILL_STATE: Bill = {
   id: '',
@@ -27,6 +37,7 @@ const DEFAULT_STATE: SplitState = {
   error: '',
   showModal: false,
   formType: 'item',
+  formData: null,
 };
 
 @Injectable({
@@ -105,6 +116,7 @@ export class SplitStore extends ComponentStore<SplitState> {
       showModal: state.showModal,
       formType: state.formType,
       hasItems: bill.items.length > 0,
+      formData: state.formData,
     })
   );
   constructor() {
@@ -150,11 +162,44 @@ export class SplitStore extends ComponentStore<SplitState> {
     )
   );
 
-  openModal(formType: FormType = 'item') {
-    this.patchState({
-      showModal: true,
-      formType,
-    });
+  openModal(formType: FormType = 'item', id: string | null = null) {
+    const { bill } = this.get();
+    if (formType === 'item') {
+      this.patchState({
+        showModal: true,
+        formType,
+        formData:
+          bill.items.find((item) => item.id === id) ?? createBillItem('', 0, 1),
+      });
+    } else if (formType === 'charge') {
+      this.patchState({
+        showModal: true,
+        formType,
+        formData:
+          bill.addendums.find((item) => item.id === id) ??
+          createPercentCharge(''),
+      });
+    } else if (formType === 'discount') {
+      this.patchState({
+        showModal: true,
+        formType,
+        formData:
+          bill.addendums.find((item) => item.id === id) ??
+          createPercentDiscount(''),
+      });
+    } else if (formType === 'bill') {
+      this.patchState({
+        showModal: true,
+        formType,
+        formData: !id
+          ? bill
+          : createBill(
+              DEFAULT_BILL_STATE.description,
+              DEFAULT_BILL_STATE.currency,
+              DEFAULT_BILL_STATE.billDate
+            ),
+      });
+    }
   }
 
   closeModal() {

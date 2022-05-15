@@ -39,11 +39,18 @@ export class SplitFormUiComponent {
   @Input()
   set formType(value: FormType) {
     this._formType = value;
-
-    this.splitFormPresenter.createForm(this._formType);
   }
   get formType() {
     return this._formType;
+  }
+  private _formData: BillItem | Addendum | Bill | null = null;
+  @Input()
+  set formData(value: BillItem | Addendum | Bill | null) {
+    this._formData = value;
+    this.splitFormPresenter.createForm(this._formType, value);
+  }
+  get formData() {
+    return this._formData;
   }
   @Output()
   formClose = new EventEmitter<BillItem | Addendum | Bill | null>();

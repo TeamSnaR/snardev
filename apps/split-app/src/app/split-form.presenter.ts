@@ -17,35 +17,13 @@ import {
   createFixedDiscount,
   createPercentCharge,
   createPercentDiscount,
+  CURRENCIES,
 } from './utils';
-
-const CURRENCIES = [
-  {
-    label: 'MYR',
-    value: 'MYR',
-  },
-  {
-    label: 'USD',
-    value: 'USD',
-  },
-  {
-    label: 'EUR',
-    value: 'EUR',
-  },
-  {
-    label: 'GBP',
-    value: 'GBP',
-  },
-  {
-    label: 'PHP',
-    value: 'PHP',
-  },
-];
 
 const DEFAULT_BILL_ITEM_STATE = {
   description: '',
   quantity: 1,
-  price: '',
+  price: 0,
 };
 
 const DEFAULT_ADDENDUM_STATE = {
@@ -66,13 +44,22 @@ export class SplitFormPresenter {
   currencies = CURRENCIES;
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  createForm(formType: FormType): FormGroup {
+  createForm(
+    formType: FormType,
+    formData: Bill | Addendum | BillItem | null
+  ): FormGroup {
     if (formType === 'item') {
-      this.splitForm = this.createBillItemForm();
+      this.splitForm = this.createBillItemForm(
+        (formData as BillItem) ?? DEFAULT_BILL_ITEM_STATE
+      );
     } else if (formType === 'charge' || formType === 'discount') {
-      this.splitForm = this.createAddendumForm();
+      this.splitForm = this.createAddendumForm(
+        (formData as Addendum) ?? DEFAULT_ADDENDUM_STATE
+      );
     } else if (formType === 'bill') {
-      this.splitForm = this.createBillForm();
+      this.splitForm = this.createBillForm(
+        (formData as Bill) ?? DEFAULT_BILL_STATE
+      );
     }
 
     return this.splitForm;
@@ -135,36 +122,38 @@ export class SplitFormPresenter {
     );
   }
 
-  private createAddendumForm(
-    formData: AddendumFormModel = DEFAULT_ADDENDUM_STATE
-  ): FormGroup {
-    return this.formBuilder.group({
-      description: [formData.description, [Validators.required]],
-      rate: [formData.rate, [Validators.required]],
-      amountType: [formData.amountType, [Validators.required]],
-    });
-  }
-
-  private createBillItemForm(): FormGroup {
+  private createAddendumForm(formData: Addendum): FormGroup {
     return this.formBuilder.group(
       {
         description: [
-          DEFAULT_BILL_ITEM_STATE.description,
+          formData.rate > 0 ? formData.description : '',
           [Validators.required],
         ],
-        quantity: [
-          DEFAULT_BILL_ITEM_STATE.quantity,
-          [Validators.required, Validators.min(1)],
-        ],
-        price: [DEFAULT_BILL_ITEM_STATE.price, [Validators.required]],
+        rate: [formData.rate, [Validators.required]],
+        amountType: [formData.amountType, [Validators.required]],
       },
       { updateOn: 'blur' }
     );
   }
 
-  private createBillForm(
-    formData: BillFormModel = DEFAULT_BILL_STATE
-  ): FormGroup {
+  private createBillItemForm(formData: BillItem): FormGroup {
+    return this.formBuilder.group(
+      {
+        description: this.formBuilder.control(formData.description, {
+          validators: [Validators.required],
+        }),
+        quantity: this.formBuilder.control(formData.quantity, {
+          validators: [Validators.required, Validators.min(1)],
+        }),
+        price: this.formBuilder.control(formData.price, {
+          validators: [Validators.required],
+        }),
+      },
+      { updateOn: 'blur' }
+    );
+  }
+
+  private createBillForm(formData: Bill): FormGroup {
     return this.formBuilder.group(
       {
         description: [formData.description, [Validators.required]],

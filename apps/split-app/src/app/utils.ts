@@ -88,8 +88,8 @@ export function getBillItemAmountWithCharges(
 
 export function createBillItem(
   description: string,
-  price: number,
-  quantity: number
+  price: number = 0,
+  quantity: number = 1
 ) {
   return {
     id: uuidv4(),
@@ -113,3 +113,26 @@ export function createBill(
     addendums: [],
   };
 }
+
+export const CURRENCIES = [
+  {
+    label: 'MYR',
+    value: 'MYR',
+  },
+  {
+    label: 'USD',
+    value: 'USD',
+  },
+  {
+    label: 'EUR',
+    value: 'EUR',
+  },
+  {
+    label: 'GBP',
+    value: 'GBP',
+  },
+  {
+    label: 'PHP',
+    value: 'PHP',
+  },
+];
