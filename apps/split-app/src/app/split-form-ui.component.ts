@@ -8,7 +8,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { BillItem, BillItemFormModel, FormType } from './models';
+import { Addendum, BillItem, BillItemFormModel, FormType } from './models';
 import { SplitFormPresenter } from './split-form.presenter';
 
 @Component({
@@ -26,32 +26,41 @@ import { SplitFormPresenter } from './split-form.presenter';
   viewProviders: [SplitFormPresenter],
 })
 export class SplitFormUiComponent {
-  private _formShow!: boolean;
+  private _formShow = false;
   @Input()
   set formShow(value: boolean) {
     this._formShow = value;
-    this.splitFormPresenter.reset();
+    this.splitFormPresenter.resetForm(this.formType);
   }
+
   get formShow() {
     return this._formShow;
   }
-  @Input()
-  formType: FormType = 'item';
-  @Output()
-  formClose = new EventEmitter<BillItem | null>();
-  get billItemForm() {
-    return this.splitFormPresenter.billItemForm;
-  }
 
-  get billItems() {
-    return this.billItemForm.controls['items'] as FormArray;
+  private _formType!: FormType;
+  @Input()
+  set formType(value: FormType) {
+    this._formType = value;
+
+    this.splitFormPresenter.createForm(this._formType);
+  }
+  get formType() {
+    return this._formType;
+  }
+  @Output()
+  formClose = new EventEmitter<BillItem | Addendum | null>();
+
+  get splitForm() {
+    return this.splitFormPresenter.splitForm;
   }
 
   constructor(private readonly splitFormPresenter: SplitFormPresenter) {}
   onSubmit() {
-    const billItem = this.splitFormPresenter.save();
-    if (billItem) {
-      this.formClose.emit(billItem);
+    const formData = this.splitFormPresenter.saveForm(this.formType);
+    if (formData) {
+      console.log(formData);
+
+      this.formClose.emit(formData);
     } else {
       return;
     }

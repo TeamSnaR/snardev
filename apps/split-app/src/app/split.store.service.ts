@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import {
-  concatMap,
-  Observable,
-  of,
-  pipe,
-  switchMap,
-  tap,
-  withLatestFrom,
-} from 'rxjs';
+import { ComponentStore } from '@ngrx/component-store';
+import { Observable, pipe, tap } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { Addendum, BillItem, BillState, FormType } from './models';
+import { getBillSubtotal, getBillGrandTotal, getPerItemRate } from './utils';
 
 export interface SplitState {
   bill: BillState;
@@ -65,11 +58,11 @@ const DEFAULT_BILL_STATE: BillState = {
   ],
   addendums: [
     // getPercentDiscount('Loyalty discount', 0.5),
-    getPercentCharge('Service charge', 0.1),
-    getPercentCharge('SST', 0.06),
+    // getPercentCharge('Service charge', 10),
+    // getPercentCharge('SST', 6),
     // getFixedDiscount('Voucher', 2),
     // getFixedCharge('Delivery charge', 3),
-    getFixedCharge('Sys rounding', 0.01),
+    // getFixedCharge('Sys rounding', 0.01),
   ],
 };
 
@@ -79,94 +72,6 @@ const DEFAULT_STATE: SplitState = {
   showModal: false,
   formType: 'item',
 };
-
-export function getPercentDiscount(
-  description: string,
-  rate: number = 0
-): Addendum {
-  return {
-    id: uuidv4(),
-    description: `${description} (${rate * 100}%)`,
-    rate,
-    amount: 0,
-    amountType: 'percent',
-    type: 'deduct',
-  };
-}
-export function getFixedDiscount(
-  description: string,
-  rate: number = 0
-): Addendum {
-  return {
-    id: uuidv4(),
-    description: `${description} (${rate})`,
-    rate,
-    amount: 0,
-    amountType: 'fixed',
-    type: 'deduct',
-  };
-}
-
-export function getPercentCharge(
-  description: string,
-  rate: number = 0
-): Addendum {
-  return {
-    id: uuidv4(),
-    description: `${description} (${rate * 100}%)`,
-    rate,
-    amount: 0,
-    amountType: 'percent',
-    type: 'add',
-  };
-}
-
-export function getFixedCharge(
-  description: string,
-  rate: number = 0
-): Addendum {
-  return {
-    id: uuidv4(),
-    description: `${description} (${rate})`,
-    rate,
-    amount: 0,
-    amountType: 'fixed',
-    type: 'add',
-  };
-}
-
-export function getBillSubtotal(bill: BillState): number {
-  return bill.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-}
-
-export function getBillGrandTotal(
-  bill: BillState,
-  addendums: Addendum[]
-): number {
-  const subTotal = getBillSubtotal(bill);
-  return addendums.reduce((acc, addendum) => acc + addendum.amount, subTotal);
-}
-
-export function getPerItemRate(bill: BillState, addendums: Addendum[]): number {
-  const billTotal = getBillGrandTotal(bill, addendums);
-  return addendums
-    .filter((addendum) => addendum.type === 'add')
-    .reduce((acc, charge) => {
-      const rate =
-        charge.amountType === 'fixed'
-          ? (charge.rate * 100) / billTotal
-          : charge.rate;
-
-      return acc + rate;
-    }, 0);
-}
-
-export function getBillItemAmountWithCharges(
-  billItem: BillItem,
-  perItemRate: number
-): number {
-  return (billItem.price + billItem.price * perItemRate) * billItem.quantity;
-}
 
 @Injectable({
   providedIn: 'any',
@@ -179,16 +84,16 @@ export class SplitStore extends ComponentStore<SplitState> {
     (state, subTotal) => {
       return state.bill.addendums
         .reduce((acc, addendum) => {
-          if (addendum.type === 'add') {
+          if (addendum.type === 'charge') {
             addendum.amount =
               addendum.amountType === 'percent'
-                ? subTotal * addendum.rate
+                ? subTotal * (addendum.rate / 100)
                 : addendum.rate;
             acc.push(addendum);
-          } else if (addendum.type === 'deduct') {
+          } else if (addendum.type === 'discount') {
             addendum.amount =
               (addendum.amountType === 'percent'
-                ? subTotal * addendum.rate
+                ? subTotal * (addendum.rate / 100)
                 : addendum.rate) * -1;
             acc.push(addendum);
           }
@@ -264,6 +169,21 @@ export class SplitStore extends ComponentStore<SplitState> {
     )
   );
 
+  saveAddendum = this.effect<Addendum>(
+    pipe(
+      tap((addendum) => {
+        const { bill } = this.get();
+        this.patchState({
+          bill: {
+            ...bill,
+            addendums: [...bill.addendums, addendum],
+          },
+        });
+      }),
+      tap(() => this.closeModal())
+    )
+  );
+
   openModal(formType: FormType = 'item') {
     this.patchState({
       showModal: true,
@@ -273,9 +193,5 @@ export class SplitStore extends ComponentStore<SplitState> {
 
   closeModal() {
     this.patchState({ showModal: false });
-  }
-
-  addItem() {
-    this.patchState({ showModal: true });
   }
 }

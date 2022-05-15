@@ -1,46 +1,108 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BillItem, BillItemFormModel } from './models';
+import {
+  Addendum,
+  AddendumFormModel,
+  BillItem,
+  BillItemFormModel,
+  FormType,
+} from './models';
+import {
+  getFixedCharge,
+  getFixedDiscount,
+  getPercentCharge,
+  getPercentDiscount,
+} from './utils';
 
-const DEFAULT_STATE = {
+const DEFAULT_BILL_ITEM_STATE = {
   description: '',
   quantity: 1,
-  price: 0,
+  price: '',
+};
+
+const DEFAULT_ADDENDUM_STATE = {
+  description: '',
+  rate: '',
+  amountType: 'percent',
 };
 
 @Injectable()
 export class SplitFormPresenter {
-  billItemForm = this.formBuilder.group({
-    description: [DEFAULT_STATE.description, [Validators.required]],
-    quantity: [
-      DEFAULT_STATE.quantity,
-      [Validators.required, Validators.min(1)],
-    ],
-    price: [DEFAULT_STATE.price, [Validators.required]],
-  });
+  splitForm!: FormGroup;
   constructor(private readonly formBuilder: FormBuilder) {}
 
-  save(): BillItem | null {
-    this.billItemForm.markAllAsTouched();
-    if (this.billItemForm.valid) {
-      const billItem = this.mapFrom(this.billItemForm.value);
-      this.reset();
-      return billItem;
+  createForm(formType: FormType): FormGroup {
+    if (formType === 'item') {
+      this.splitForm = this.createBillItemForm();
     } else {
-      return null;
+      this.splitForm = this.createAddendumForm();
+    }
+
+    return this.splitForm;
+  }
+
+  saveForm(formType: FormType): BillItem | Addendum | null {
+    this.splitForm.markAllAsTouched();
+
+    if (this.splitForm.valid) {
+      if (formType === 'item') {
+        return this.mapToBillItem(this.splitForm.value);
+      } else if (formType === 'charge' || formType === 'discount') {
+        return this.mapToAddendum(formType, this.splitForm.value);
+      }
+    }
+
+    return null;
+  }
+
+  resetForm(formType: FormType = 'item') {
+    if (formType === 'item') {
+      this.splitForm?.reset(DEFAULT_BILL_ITEM_STATE);
+    } else {
+      this.splitForm?.reset(DEFAULT_ADDENDUM_STATE);
     }
   }
 
-  reset() {
-    this.billItemForm.reset(DEFAULT_STATE);
-  }
-
-  private mapFrom(formData: BillItemFormModel): BillItem {
+  private mapToBillItem(formData: BillItemFormModel): BillItem {
     return {
       id: '',
       description: formData.description,
       quantity: +formData.quantity,
       price: +formData.price,
     };
+  }
+
+  private mapToAddendum(
+    formType: FormType,
+    formData: AddendumFormModel
+  ): Addendum {
+    if (formType === 'charge') {
+      return formData.amountType === 'percent'
+        ? getPercentCharge(formData.description, +formData.rate)
+        : getFixedCharge(formData.description, +formData.rate);
+    } else {
+      return formData.amountType === 'percent'
+        ? getPercentDiscount(formData.description, +formData.rate)
+        : getFixedDiscount(formData.description, +formData.rate);
+    }
+  }
+
+  private createAddendumForm(): FormGroup {
+    return this.formBuilder.group({
+      description: [DEFAULT_ADDENDUM_STATE.description, [Validators.required]],
+      rate: [DEFAULT_ADDENDUM_STATE.rate, [Validators.required]],
+      amountType: [DEFAULT_ADDENDUM_STATE.amountType, [Validators.required]],
+    });
+  }
+
+  private createBillItemForm(): FormGroup {
+    return this.formBuilder.group({
+      description: [DEFAULT_BILL_ITEM_STATE.description, [Validators.required]],
+      quantity: [
+        DEFAULT_BILL_ITEM_STATE.quantity,
+        [Validators.required, Validators.min(1)],
+      ],
+      price: [DEFAULT_BILL_ITEM_STATE.price, [Validators.required]],
+    });
   }
 }

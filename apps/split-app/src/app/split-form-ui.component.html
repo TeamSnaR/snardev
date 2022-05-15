@@ -54,7 +54,7 @@
               <ng-container *ngSwitchCase="'item'">
                 <form
                   class="space-y-8 divide-y divide-gray-200"
-                  [formGroup]="billItemForm"
+                  [formGroup]="splitForm"
                   (ngSubmit)="onSubmit()"
                 >
                   <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
@@ -81,14 +81,14 @@
                         class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5"
                       >
                         <label
-                          for="description"
+                          for="item-description"
                           class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                         >
                           Description
                         </label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                           <textarea
-                            id="description"
+                            id="item-description"
                             formControlName="description"
                             rows="2"
                             class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
@@ -122,17 +122,16 @@
                       </div>
                       <div
                         *ngIf="
-                          billItemForm.invalid &&
-                          (billItemForm.dirty || billItemForm.touched)
+                          splitForm.invalid &&
+                          (splitForm.dirty || splitForm.touched)
                         "
                         class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5"
                       >
                         <p class="text-red-600">
-                          Form status: {{ billItemForm.status }}
+                          Form status: {{ splitForm.status }}
                           {{
-                            billItemForm.invalid &&
-                              (billItemForm.dirty || billItemForm.touched)
-                              | json
+                            splitForm.invalid &&
+                              (splitForm.dirty || splitForm.touched) | json
                           }}
                         </p>
                       </div>
@@ -160,39 +159,119 @@
                   </div>
                 </form>
               </ng-container>
-              <ng-container *ngSwitchCase="'charge'">
+              <ng-container *ngSwitchDefault>
                 <form
                   class="space-y-8 divide-y divide-gray-200"
-                  [formGroup]="billItemForm"
+                  [formGroup]="splitForm"
                   (ngSubmit)="onSubmit()"
                 >
-                  <div class="pt-1">
-                    <div
-                      class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense"
-                    >
-                      <button
-                        (click)="onCancel()"
-                        type="button"
-                        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+                    <div>
+                      <div
+                        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5"
                       >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        <label
+                          for="description"
+                          class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                        >
+                          Description
+                        </label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                          <textarea
+                            id="description"
+                            formControlName="description"
+                            rows="2"
+                            class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div
+                        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5"
                       >
-                        Save
-                      </button>
+                        <label
+                          for="rate"
+                          class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                        >
+                          Rate
+                        </label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                          <input
+                            type="number"
+                            formControlName="rate"
+                            id="rate"
+                            class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+                      </div>
+                      <div class="pt-6 sm:pt-5">
+                        <div role="group" aria-labelledby="label-notifications">
+                          <div
+                            class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-baseline"
+                          >
+                            <div>
+                              <div
+                                class="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700"
+                                id="label-notifications"
+                              >
+                                Type
+                              </div>
+                            </div>
+                            <div class="sm:col-span-2">
+                              <div class="max-w-lg">
+                                <div class="mt-4 space-y-4">
+                                  <div class="flex items-center">
+                                    <input
+                                      id="amount-type-percent"
+                                      formControlName="amountType"
+                                      value="percent"
+                                      type="radio"
+                                      class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                    />
+                                    <label
+                                      for="amount-type-percent"
+                                      class="ml-3 block text-sm font-medium text-gray-700"
+                                    >
+                                      Percent
+                                    </label>
+                                  </div>
+                                  <div class="flex items-center">
+                                    <input
+                                      id="amount-type-fixed"
+                                      formControlName="amountType"
+                                      value="fixed"
+                                      type="radio"
+                                      class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                    />
+                                    <label
+                                      for="amount-type-fixed"
+                                      class="ml-3 block text-sm font-medium text-gray-700"
+                                    >
+                                      Fixed
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="
+                          splitForm.invalid &&
+                          (splitForm.dirty || splitForm.touched)
+                        "
+                        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5"
+                      >
+                        <p class="text-red-600">
+                          Form status: {{ splitForm.status }}
+                          {{
+                            splitForm.invalid &&
+                              (splitForm.dirty || splitForm.touched) | json
+                          }}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </form>
-              </ng-container>
-              <ng-container *ngSwitchCase="'discount'">
-                <form
-                  class="space-y-8 divide-y divide-gray-200"
-                  [formGroup]="billItemForm"
-                  (ngSubmit)="onSubmit()"
-                >
                   <div class="pt-1">
                     <div
                       class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense"
