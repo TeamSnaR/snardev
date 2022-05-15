@@ -159,7 +159,14 @@ export class SplitStore extends ComponentStore<SplitState> {
     pipe(
       tap((bill) => {
         const { bill: oldBill } = this.get();
-        this.patchState({ bill: { ...oldBill, ...bill } });
+        this.patchState({
+          bill: {
+            ...oldBill,
+            description: bill.description,
+            currency: bill.currency,
+            billDate: bill.billDate,
+          },
+        });
       }),
       tap(() => this.closeModal())
     )
