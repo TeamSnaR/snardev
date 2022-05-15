@@ -39,6 +39,10 @@ export class SplitFormComponent {
     this.splitStore.openModal('discount');
   }
 
+  toggleOptions() {
+    this.splitStore.toggleOptions();
+  }
+
   onCloseModal(payload: BillItem | Addendum | Bill | null) {
     if (!payload) {
       this.splitStore.closeModal();

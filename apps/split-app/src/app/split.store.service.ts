@@ -19,6 +19,7 @@ export interface SplitState {
   showModal: boolean;
   formType: FormType;
   formData: Bill | Addendum | BillItem | null;
+  showOptions: boolean;
 }
 
 const DEFAULT_CURRENCY = CURRENCIES[0].value;
@@ -38,6 +39,7 @@ const DEFAULT_STATE: SplitState = {
   showModal: false,
   formType: 'item',
   formData: null,
+  showOptions: false,
 };
 
 @Injectable({
@@ -117,6 +119,7 @@ export class SplitStore extends ComponentStore<SplitState> {
       formType: state.formType,
       hasItems: bill.items.length > 0,
       formData: state.formData,
+      showOptions: state.showOptions,
     })
   );
   constructor() {
@@ -167,6 +170,7 @@ export class SplitStore extends ComponentStore<SplitState> {
     if (formType === 'item') {
       this.patchState({
         showModal: true,
+        showOptions: false,
         formType,
         formData:
           bill.items.find((item) => item.id === id) ?? createBillItem('', 0, 1),
@@ -174,6 +178,7 @@ export class SplitStore extends ComponentStore<SplitState> {
     } else if (formType === 'charge') {
       this.patchState({
         showModal: true,
+        showOptions: false,
         formType,
         formData:
           bill.addendums.find((item) => item.id === id) ??
@@ -182,6 +187,7 @@ export class SplitStore extends ComponentStore<SplitState> {
     } else if (formType === 'discount') {
       this.patchState({
         showModal: true,
+        showOptions: false,
         formType,
         formData:
           bill.addendums.find((item) => item.id === id) ??
@@ -190,6 +196,7 @@ export class SplitStore extends ComponentStore<SplitState> {
     } else if (formType === 'bill') {
       this.patchState({
         showModal: true,
+        showOptions: false,
         formType,
         formData: !id
           ? bill
@@ -204,5 +211,11 @@ export class SplitStore extends ComponentStore<SplitState> {
 
   closeModal() {
     this.patchState({ showModal: false });
+  }
+
+  toggleOptions() {
+    this.patchState({
+      showOptions: !this.get().showOptions,
+    });
   }
 }
