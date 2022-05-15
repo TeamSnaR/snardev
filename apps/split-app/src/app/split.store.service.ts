@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable, pipe, tap } from 'rxjs';
-import { Addendum, BillItem, BillState, FormType } from './models';
+import { Addendum, BillItem, Bill, FormType } from './models';
 import { getBillSubtotal, getBillGrandTotal, getPerItemRate } from './utils';
 
 export interface SplitState {
-  bill: BillState;
+  bill: Bill;
   error: string;
   showModal: boolean;
   formType: FormType;
@@ -13,12 +13,13 @@ export interface SplitState {
 
 const DEFAULT_CURRENCY = 'RM';
 
-const DEFAULT_BILL_STATE: BillState = {
+const DEFAULT_BILL_STATE: Bill = {
   id: '',
-  description: 'Bo and Banker bill',
+  description: 'Untitled',
   currency: DEFAULT_CURRENCY,
   items: [],
   addendums: [],
+  billDate: new Date(),
 };
 
 const DEFAULT_STATE: SplitState = {
@@ -79,7 +80,7 @@ export class SplitStore extends ComponentStore<SplitState> {
     })
   );
   readonly bill$: Observable<
-    BillState & { grandTotal: number; subTotal: number; perItemRate: number }
+    Bill & { grandTotal: number; subTotal: number; perItemRate: number }
   > = this.select(
     this.state$,
     this.addendums$,
@@ -134,6 +135,16 @@ export class SplitStore extends ComponentStore<SplitState> {
             addendums: [...bill.addendums, addendum],
           },
         });
+      }),
+      tap(() => this.closeModal())
+    )
+  );
+
+  saveBill = this.effect<Bill>(
+    pipe(
+      tap((bill) => {
+        const { bill: oldBill } = this.get();
+        this.patchState({ bill: { ...oldBill, ...bill } });
       }),
       tap(() => this.closeModal())
     )

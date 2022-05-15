@@ -1,4 +1,4 @@
-import { Addendum, BillState, BillItem } from './models';
+import { Addendum, Bill, BillItem } from './models';
 import { v4 as uuidv4 } from 'uuid';
 
 export function createPercentDiscount(
@@ -56,19 +56,16 @@ export function createFixedCharge(
   };
 }
 
-export function getBillSubtotal(bill: BillState): number {
+export function getBillSubtotal(bill: Bill): number {
   return bill.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 }
 
-export function getBillGrandTotal(
-  bill: BillState,
-  addendums: Addendum[]
-): number {
+export function getBillGrandTotal(bill: Bill, addendums: Addendum[]): number {
   const subTotal = getBillSubtotal(bill);
   return addendums.reduce((acc, addendum) => acc + addendum.amount, subTotal);
 }
 
-export function getPerItemRate(bill: BillState, addendums: Addendum[]): number {
+export function getPerItemRate(bill: Bill, addendums: Addendum[]): number {
   const billTotal = getBillGrandTotal(bill, addendums);
   return addendums
     .filter((addendum) => addendum.type === 'charge')
@@ -99,5 +96,20 @@ export function createBillItem(
     description,
     price,
     quantity,
+  };
+}
+
+export function createBill(
+  description: string,
+  currency: string,
+  billDate: Date
+) {
+  return {
+    id: uuidv4(),
+    description,
+    currency,
+    billDate,
+    items: [],
+    addendums: [],
   };
 }

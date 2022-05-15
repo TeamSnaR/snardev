@@ -1,14 +1,12 @@
 import {
   Component,
-  OnInit,
   ViewEncapsulation,
   ChangeDetectionStrategy,
   Input,
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormArray } from '@angular/forms';
-import { Addendum, BillItem, BillItemFormModel, FormType } from './models';
+import { Addendum, Bill, BillItem, FormType } from './models';
 import { SplitFormPresenter } from './split-form.presenter';
 
 @Component({
@@ -48,10 +46,14 @@ export class SplitFormUiComponent {
     return this._formType;
   }
   @Output()
-  formClose = new EventEmitter<BillItem | Addendum | null>();
+  formClose = new EventEmitter<BillItem | Addendum | Bill | null>();
 
   get splitForm() {
     return this.splitFormPresenter.splitForm;
+  }
+
+  get currencies() {
+    return this.splitFormPresenter.currencies;
   }
 
   constructor(private readonly splitFormPresenter: SplitFormPresenter) {}

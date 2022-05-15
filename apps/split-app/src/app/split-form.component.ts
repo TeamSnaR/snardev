@@ -3,7 +3,7 @@ import {
   ViewEncapsulation,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Addendum, BillItem, BillItemFormModel } from './models';
+import { Addendum, Bill, BillItem } from './models';
 import { SplitStore } from './split.store.service';
 
 @Component({
@@ -23,6 +23,10 @@ export class SplitFormComponent {
   readonly vm$ = this.splitStore.vm$;
   constructor(private readonly splitStore: SplitStore) {}
 
+  editBill() {
+    this.splitStore.openModal('bill');
+  }
+
   addItem() {
     this.splitStore.openModal();
   }
@@ -35,7 +39,7 @@ export class SplitFormComponent {
     this.splitStore.openModal('discount');
   }
 
-  onCloseModal(payload: BillItem | Addendum | null) {
+  onCloseModal(payload: BillItem | Addendum | Bill | null) {
     if (!payload) {
       this.splitStore.closeModal();
     } else {
@@ -43,6 +47,8 @@ export class SplitFormComponent {
         this.splitStore.saveBillItem(payload as BillItem);
       } else if ((payload as Addendum).rate !== undefined) {
         this.splitStore.saveAddendum(payload as Addendum);
+      } else if ((payload as Bill).items !== undefined) {
+        this.splitStore.saveBill(payload as Bill);
       }
     }
   }
