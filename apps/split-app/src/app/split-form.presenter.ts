@@ -65,16 +65,23 @@ export class SplitFormPresenter {
     return this.splitForm;
   }
 
-  saveForm(formType: FormType): BillItem | Addendum | Bill | null {
+  saveForm(
+    formType: FormType,
+    formData: BillFormModel | BillItemFormModel | AddendumFormModel | null
+  ): BillItem | Addendum | Bill | null {
     this.splitForm.markAllAsTouched();
 
     if (this.splitForm.valid) {
       if (formType === 'item') {
-        return this.mapToBillItem(this.splitForm.value);
+        return this.mapToBillItem(this.splitForm.value, formData as BillItem);
       } else if (formType === 'charge' || formType === 'discount') {
-        return this.mapToAddendum(formType, this.splitForm.value);
+        return this.mapToAddendum(
+          formType,
+          this.splitForm.value,
+          formData as Addendum
+        );
       } else if (formType === 'bill') {
-        return this.mapToBill(this.splitForm.value);
+        return this.mapToBill(this.splitForm.value, formData as Bill);
       }
     }
 
@@ -91,45 +98,65 @@ export class SplitFormPresenter {
     }
   }
 
-  private mapToBillItem(formData: BillItemFormModel): BillItem {
-    return createBillItem(
+  private mapToBillItem(
+    formData: BillItemFormModel,
+    data: BillItem | null
+  ): BillItem {
+    const billItem = createBillItem(
       formData.description,
       +formData.price,
       +formData.quantity
     );
+    if (data) {
+      billItem.id = data.id;
+    }
+    return billItem;
   }
 
   private mapToAddendum(
     formType: FormType,
-    formData: AddendumFormModel
+    formData: AddendumFormModel,
+    data: Addendum | null
   ): Addendum {
+    let addendum: Addendum;
     if (formType === 'charge') {
-      return formData.amountType === 'percent'
-        ? createPercentCharge(formData.description, +formData.rate)
-        : createFixedCharge(formData.description, +formData.rate);
+      addendum =
+        formData.amountType === 'percent'
+          ? createPercentCharge(formData.description, +formData.rate)
+          : createFixedCharge(formData.description, +formData.rate);
     } else {
-      return formData.amountType === 'percent'
-        ? createPercentDiscount(formData.description, +formData.rate)
-        : createFixedDiscount(formData.description, +formData.rate);
+      addendum =
+        formData.amountType === 'percent'
+          ? createPercentDiscount(formData.description, +formData.rate)
+          : createFixedDiscount(formData.description, +formData.rate);
     }
+    if (data) {
+      addendum.id = data.id;
+    }
+
+    return addendum;
   }
 
-  private mapToBill(formData: BillFormModel): Bill {
-    return createBill(
+  private mapToBill(formData: BillFormModel, data: Bill | null): Bill {
+    const bill = createBill(
       formData.description,
       formData.currency,
       formData.billDate
     );
+    if (data) {
+      bill.id = data.id;
+    }
+    return bill;
   }
 
   private createAddendumForm(formData: Addendum): FormGroup {
     return this.formBuilder.group(
       {
         description: [
-          formData.rate > 0 ? formData.description : '',
+          Math.abs(formData.rate) > 0 ? formData.description : '',
           [Validators.required],
         ],
-        rate: [formData.rate, [Validators.required]],
+        rate: [Math.abs(formData.rate), [Validators.required]],
         amountType: [formData.amountType, [Validators.required]],
       },
       { updateOn: 'blur' }

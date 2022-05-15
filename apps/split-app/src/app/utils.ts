@@ -8,7 +8,7 @@ export function createPercentDiscount(
   return {
     id: uuidv4(),
     description: `${description} (${rate}%)`,
-    rate,
+    rate: rate * -1,
     amount: 0,
     amountType: 'percent',
     type: 'discount',
@@ -20,8 +20,8 @@ export function createFixedDiscount(
 ): Addendum {
   return {
     id: uuidv4(),
-    description: `${description} (${rate})`,
-    rate,
+    description: `${description}`,
+    rate: rate * -1,
     amount: 0,
     amountType: 'fixed',
     type: 'discount',
@@ -48,7 +48,7 @@ export function createFixedCharge(
 ): Addendum {
   return {
     id: uuidv4(),
-    description: `${description} (${rate})`,
+    description: `${description}`,
     rate,
     amount: 0,
     amountType: 'fixed',

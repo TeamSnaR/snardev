@@ -65,7 +65,10 @@ export class SplitFormUiComponent {
 
   constructor(private readonly splitFormPresenter: SplitFormPresenter) {}
   onSubmit() {
-    const formData = this.splitFormPresenter.saveForm(this.formType);
+    const formData = this.splitFormPresenter.saveForm(
+      this.formType,
+      this.formData
+    );
     if (formData) {
       this.formClose.emit(formData);
     } else {

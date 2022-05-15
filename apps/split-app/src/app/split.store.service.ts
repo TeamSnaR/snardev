@@ -11,6 +11,7 @@ import {
   createPercentDiscount,
   createPercentCharge,
   createBill,
+  createFixedDiscount,
 } from './utils';
 
 export interface SplitState {
@@ -28,8 +29,12 @@ const DEFAULT_BILL_STATE: Bill = {
   id: '',
   description: 'Untitled',
   currency: DEFAULT_CURRENCY,
-  items: [],
-  addendums: [],
+  items: [createBillItem('guiness pint', 15)],
+  addendums: [
+    createPercentCharge('tax', 6),
+    createPercentCharge('service charge', 10),
+    createFixedDiscount('Sys. rounding', 0.01),
+  ],
   billDate: new Date(),
 };
 
@@ -61,9 +66,9 @@ export class SplitStore extends ComponentStore<SplitState> {
             acc.push(addendum);
           } else if (addendum.type === 'discount') {
             addendum.amount =
-              (addendum.amountType === 'percent'
+              addendum.amountType === 'percent'
                 ? subTotal * (addendum.rate / 100)
-                : addendum.rate) * -1;
+                : addendum.rate;
             acc.push(addendum);
           }
 
@@ -132,7 +137,10 @@ export class SplitStore extends ComponentStore<SplitState> {
         this.patchState({
           bill: {
             ...bill,
-            items: [...bill.items, billItem],
+            items: [
+              ...bill.items.filter((bi) => bi.id !== billItem.id),
+              billItem,
+            ],
           },
         });
       }),
@@ -147,7 +155,10 @@ export class SplitStore extends ComponentStore<SplitState> {
         this.patchState({
           bill: {
             ...bill,
-            addendums: [...bill.addendums, addendum],
+            addendums: [
+              ...bill.addendums.filter((a) => a.id !== addendum.id),
+              addendum,
+            ],
           },
         });
       }),
@@ -182,23 +193,23 @@ export class SplitStore extends ComponentStore<SplitState> {
         formData:
           bill.items.find((item) => item.id === id) ?? createBillItem('', 0, 1),
       });
-    } else if (formType === 'charge') {
+    } else if (formType === 'charge' || formType === 'discount') {
+      const addendum = bill.addendums.find((item) => item.id === id);
+      let formData: Addendum;
+
+      if (addendum) {
+        formData = { ...addendum };
+      } else {
+        formData =
+          formType === 'charge'
+            ? createPercentCharge('', 0)
+            : createPercentDiscount('', 0);
+      }
       this.patchState({
         showModal: true,
         showOptions: false,
-        formType,
-        formData:
-          bill.addendums.find((item) => item.id === id) ??
-          createPercentCharge(''),
-      });
-    } else if (formType === 'discount') {
-      this.patchState({
-        showModal: true,
-        showOptions: false,
-        formType,
-        formData:
-          bill.addendums.find((item) => item.id === id) ??
-          createPercentDiscount(''),
+        formType: formData.rate > 0 ? 'charge' : 'discount',
+        formData,
       });
     } else if (formType === 'bill') {
       this.patchState({

@@ -43,6 +43,14 @@ export class SplitFormComponent {
     this.splitStore.toggleOptions();
   }
 
+  manageItem(id: string) {
+    this.splitStore.openModal('item', id);
+  }
+
+  manageAddendum(id: string) {
+    this.splitStore.openModal('charge', id);
+  }
+
   onCloseModal(payload: BillItem | Addendum | Bill | null) {
     if (!payload) {
       this.splitStore.closeModal();
