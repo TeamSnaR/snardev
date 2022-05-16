@@ -24,7 +24,7 @@
           class="mt-4 space-x-4 sm:mt-0 sm:ml-16 sm:flex-none"
           *ngIf="vm.hasItems"
         >
-          <div class="bg-white flex items-start justify-end">
+          <div class="bg-white flex items-start justify-end gap-4">
             <!-- This example requires Tailwind CSS v2.0+ -->
             <div class="relative z-0 inline-flex shadow-sm rounded-md">
               <button
@@ -101,19 +101,17 @@
                     >
                       Add discount
                     </a>
-
-                    <a
-                      href="#"
-                      class="text-gray-700 block px-4 py-2 text-sm"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="option-menu-item-2"
-                    >
-                      Share
-                    </a>
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+              >
+                Save and share
+              </button>
             </div>
           </div>
         </div>
@@ -134,7 +132,6 @@
           <table class="min-w-full divide-y divide-gray-300">
             <thead>
               <tr>
-                <th></th>
                 <th
                   scope="col"
                   class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0"
@@ -167,32 +164,32 @@
                 *ngFor="let item of vm.bill.items"
               >
                 <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
-                  <button
-                    (click)="manageItem(item.id)"
-                    title="Manage item"
-                    type="button"
-                    class="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                      />
-                      <path
-                        fill-rule="evenodd"
-                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                </td>
-                <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
                   <div class="font-medium text-gray-900">
-                    {{ item.description | uppercase }}
+                    <button
+                      (click)="manageItem(item.id)"
+                      title="Manage item"
+                      type="button"
+                      class="inline-flex items-center text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span class="ml-2">{{
+                        item.description | uppercase
+                      }}</span>
+                    </button>
                   </div>
                   <div class="mt-0.5 text-gray-500 sm:hidden">
                     {{ item.quantity }} at
@@ -251,7 +248,6 @@
             </tbody>
             <tfoot>
               <tr>
-                <th scope="row"></th>
                 <th
                   scope="row"
                   colspan="3"
@@ -281,7 +277,7 @@
                     (click)="manageAddendum(addendum.id)"
                     title="Manage item"
                     type="button"
-                    class="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 md:hidden"
+                    class="inline-flex items-center text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -298,6 +294,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
+                    <span class="ml-2">{{ addendum.description }}</span>
                   </button>
                 </th>
                 <th
@@ -308,7 +305,7 @@
                     (click)="manageAddendum(addendum.id)"
                     title="Manage item"
                     type="button"
-                    class="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="inline-flex items-center text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -325,41 +322,8 @@
                         clip-rule="evenodd"
                       />
                     </svg>
+                    <span class="ml-2">{{ addendum.description }}</span>
                   </button>
-                </th>
-                <th
-                  scope="row"
-                  class="hidden pl-6 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell md:pl-0"
-                >
-                  <button
-                    (click)="manageAddendum(addendum.id)"
-                    title="Manage item"
-                    type="button"
-                    class="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                      />
-                      <path
-                        fill-rule="evenodd"
-                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                  {{ addendum.description }}
-                </th>
-                <th
-                  scope="row"
-                  class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden"
-                >
-                  {{ addendum.description }}
                 </th>
                 <td
                   class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
@@ -368,7 +332,6 @@
                 </td>
               </tr>
               <tr>
-                <th scope="row"></th>
                 <th
                   scope="row"
                   colspan="3"
