@@ -54,7 +54,8 @@ export class SplitFormUiComponent {
   }
   @Output()
   formClose = new EventEmitter<BillItem | Addendum | Bill | null>();
-
+  @Output()
+  removeItem = new EventEmitter<{ id: string; formType: FormType }>();
   get splitForm() {
     return this.splitFormPresenter.splitForm;
   }
@@ -64,6 +65,11 @@ export class SplitFormUiComponent {
   }
 
   constructor(private readonly splitFormPresenter: SplitFormPresenter) {}
+  onRemoveItem() {
+    if (this.formData) {
+      this.removeItem.emit({ id: this.formData.id, formType: this.formType });
+    }
+  }
   onSubmit() {
     const formData = this.splitFormPresenter.saveForm(
       this.formType,

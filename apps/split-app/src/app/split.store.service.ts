@@ -183,6 +183,35 @@ export class SplitStore extends ComponentStore<SplitState> {
     )
   );
 
+  removeItem = this.effect<{ id: string; formType: FormType }>(
+    pipe(
+      tap((payload) => {
+        const { bill } = this.get();
+        if (payload.formType === 'item') {
+          this.patchState({
+            bill: {
+              ...bill,
+              items: bill.items.filter((item) => item.id !== payload.id),
+            },
+          });
+        } else if (
+          payload.formType === 'charge' ||
+          payload.formType === 'discount'
+        ) {
+          this.patchState({
+            bill: {
+              ...bill,
+              addendums: bill.addendums.filter(
+                (item) => item.id !== payload.id
+              ),
+            },
+          });
+        }
+      }),
+      tap(() => this.closeModal())
+    )
+  );
+
   openModal(formType: FormType = 'item', id: string | null = null) {
     const { bill } = this.get();
     if (formType === 'item') {

@@ -3,7 +3,7 @@ import {
   ViewEncapsulation,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Addendum, Bill, BillItem } from './models';
+import { Addendum, Bill, BillItem, FormType } from './models';
 import { SplitStore } from './split.store.service';
 
 @Component({
@@ -63,5 +63,9 @@ export class SplitFormComponent {
         this.splitStore.saveBill(payload as Bill);
       }
     }
+  }
+
+  onRemoveItem(payload: { id: string; formType: FormType }) {
+    this.splitStore.removeItem(payload);
   }
 }
