@@ -8,7 +8,7 @@
               title="Edit bill"
               (click)="editBill()"
               type="button"
-              class="inline-flex items-center px-4 py-2 pl-0 border border-transparent text-sm font-medium rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="inline-flex items-center border border-transparent text-sm font-medium rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <span class="mr-2 text-xl">{{
                 vm.bill.description | uppercase
@@ -30,7 +30,7 @@
               </svg>
             </button>
           </h1>
-          <p class="mt-2 text-sm text-gray-700">
+          <p class="mt-1 text-sm text-gray-700">
             on
             <time [attr.datetime]="vm.bill.billDate | date: 'longDate'">
               {{ vm.bill.billDate | date: 'longDate' }}
