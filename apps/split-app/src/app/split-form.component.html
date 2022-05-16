@@ -89,7 +89,7 @@
     -->
                 <div
                   *ngIf="vm.showOptions"
-                  class="origin-top-right absolute right-0 mt-2 -mr-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  class="origin-top-right absolute right-0 mt-2 -mr-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none w-48"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="option-menu-button"
@@ -97,27 +97,25 @@
                 >
                   <div class="py-1" role="none">
                     <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                    <a
+                    <button
                       (click)="addExtraCharge()"
-                      href="#"
-                      class="text-gray-700 block px-4 py-2 text-sm"
+                      class="text-gray-700 block px-4 py-2 text-sm w-full text-left"
                       role="menuitem"
                       tabindex="-1"
                       id="option-menu-item-0"
                     >
                       Add extra charge
-                    </a>
+                    </button>
 
-                    <a
+                    <button
                       (click)="addDiscount()"
-                      href="#"
-                      class="text-gray-700 block px-4 py-2 text-sm"
+                      class="text-gray-700 block px-4 py-2 text-sm w-full text-left"
                       role="menuitem"
                       tabindex="-1"
                       id="option-menu-item-1"
                     >
                       Add discount
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

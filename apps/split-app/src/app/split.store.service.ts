@@ -227,7 +227,6 @@ export class SplitStore extends ComponentStore<SplitState> {
     } else if (formType === 'charge' || formType === 'discount') {
       const addendum = bill.addendums.find((item) => item.id === id);
       let formData: Addendum;
-
       if (addendum) {
         formData = { ...addendum };
       } else {
@@ -240,7 +239,7 @@ export class SplitStore extends ComponentStore<SplitState> {
       this.patchState({
         showModal: true,
         showOptions: false,
-        formType: formData.rate > 0 ? 'charge' : 'discount',
+        formType,
         formData,
       });
     } else if (formType === 'bill') {

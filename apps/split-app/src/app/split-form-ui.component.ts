@@ -47,6 +47,7 @@ export class SplitFormUiComponent {
   @Input()
   set formData(value: BillItem | Addendum | Bill | null) {
     this._formData = value;
+
     this.splitFormPresenter.createForm(this._formType, value);
   }
   get formData() {
