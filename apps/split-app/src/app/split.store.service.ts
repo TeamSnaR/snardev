@@ -29,12 +29,8 @@ const DEFAULT_BILL_STATE: Bill = {
   id: '',
   description: 'Untitled',
   currency: DEFAULT_CURRENCY,
-  items: [createBillItem('guiness pint', 15)],
-  addendums: [
-    createPercentCharge('tax', 6),
-    createPercentCharge('service charge', 10),
-    createFixedDiscount('Sys. rounding', 0.01),
-  ],
+  items: [],
+  addendums: [],
   billDate: new Date(),
 };
 
