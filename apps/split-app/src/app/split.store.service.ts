@@ -219,8 +219,10 @@ export class SplitStore extends ComponentStore<SplitState> {
         showModal: true,
         showOptions: false,
         formType,
-        formData:
-          bill.items.find((item) => item.id === id) ?? createBillItem('', 0, 1),
+        formData: {
+          ...(bill.items.find((item) => item.id === id) ??
+            createBillItem('', 0, 1)),
+        },
       });
     } else if (formType === 'charge' || formType === 'discount') {
       const addendum = bill.addendums.find((item) => item.id === id);
@@ -229,10 +231,11 @@ export class SplitStore extends ComponentStore<SplitState> {
       if (addendum) {
         formData = { ...addendum };
       } else {
-        formData =
-          formType === 'charge'
+        formData = {
+          ...(formType === 'charge'
             ? createPercentCharge('', 0)
-            : createPercentDiscount('', 0);
+            : createPercentDiscount('', 0)),
+        };
       }
       this.patchState({
         showModal: true,
@@ -245,13 +248,7 @@ export class SplitStore extends ComponentStore<SplitState> {
         showModal: true,
         showOptions: false,
         formType,
-        formData: !id
-          ? bill
-          : createBill(
-              DEFAULT_BILL_STATE.description,
-              DEFAULT_BILL_STATE.currency,
-              DEFAULT_BILL_STATE.billDate
-            ),
+        formData: { ...bill },
       });
     }
   }
