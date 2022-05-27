@@ -143,7 +143,7 @@ export class SplitFormPresenter {
       formData.currency,
       formData.billDate
     );
-    if (data) {
+    if (data && data.id !== '') {
       bill.id = data.id;
     }
     return bill;

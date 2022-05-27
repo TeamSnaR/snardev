@@ -23,8 +23,16 @@ export class SplitFormComponent {
   readonly vm$ = this.splitStore.vm$;
   constructor(private readonly splitStore: SplitStore) {}
 
+  createBill() {
+    this.splitStore.openModal('bill');
+  }
+
   editBill() {
     this.splitStore.openModal('bill');
+  }
+
+  resetBill() {
+    this.splitStore.resetBill();
   }
 
   addItem() {

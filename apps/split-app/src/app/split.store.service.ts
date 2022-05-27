@@ -121,6 +121,7 @@ export class SplitStore extends ComponentStore<SplitState> {
       hasItems: bill.items.length > 0,
       formData: state.formData,
       showOptions: state.showOptions,
+      hasBill: state.bill.id !== '',
     })
   );
   constructor() {
@@ -169,6 +170,7 @@ export class SplitStore extends ComponentStore<SplitState> {
         this.patchState({
           bill: {
             ...oldBill,
+            id: bill.id,
             description: bill.description,
             currency: bill.currency,
             billDate: bill.billDate,
@@ -256,5 +258,9 @@ export class SplitStore extends ComponentStore<SplitState> {
     this.patchState({
       showOptions: !this.get().showOptions,
     });
+  }
+
+  resetBill() {
+    this.patchState({ bill: DEFAULT_BILL_STATE });
   }
 }
