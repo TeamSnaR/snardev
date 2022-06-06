@@ -4,7 +4,7 @@
   "prefix": "snardev",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@nrwl/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/split-app",
@@ -54,18 +54,19 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@nrwl/web:file-server",
       "configurations": {
         "production": {
-          "browserTarget": "split-app:build:production"
+          "buildTarget": "split-app:build:production"
         },
         "development": {
-          "browserTarget": "split-app:build:development"
+          "buildTarget": "split-app:build:development"
         }
       },
       "defaultConfiguration": "development",
       "options": {
-        "port": 4201
+        "port": 4201,
+        "buildTarget": "split-app:build"
       }
     },
     "extract-i18n": {

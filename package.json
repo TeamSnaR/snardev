@@ -50,6 +50,7 @@
     "@nrwl/jest": "14.1.9",
     "@nrwl/linter": "14.1.9",
     "@nrwl/nx-cloud": "14.0.5",
+    "@nrwl/web": "^14.1.9",
     "@nrwl/workspace": "14.1.9",
     "@tailwindcss/forms": "^0.5.1",
     "@types/jest": "27.4.1",
@@ -77,4 +78,3 @@
     "yarn": "1.22.18"
   }
 }
-
