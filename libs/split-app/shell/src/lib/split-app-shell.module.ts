@@ -8,6 +8,15 @@ export const splitAppShellRoutes: Route[] = [
   {
     path: '',
     component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('@snardev/split-app/home').then(
+            (module) => module.SplitAppHomeModule
+          ),
+      },
+    ],
   },
 ];
 

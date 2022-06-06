@@ -16,6 +16,7 @@
     "shared-utils-selective-preloading-strategy": "libs/shared/utils/selective-preloading-strategy",
     "split-app": "apps/split-app",
     "split-app-e2e": "apps/split-app-e2e",
+    "split-app-home": "libs/split-app/home",
     "split-app-shell": "libs/split-app/shell"
   }
 }
