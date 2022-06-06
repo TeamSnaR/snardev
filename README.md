@@ -11,3 +11,7 @@
 This project was generated using [Nx](https://nx.dev)..
 
 ## Foodie fixins app
+
+## Split app
+
+Split it like it ain't no thang!
