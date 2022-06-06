@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
+import { NoBillComponent } from './no-bill.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,6 @@ import { HomeComponent } from './home.component';
       { path: '', pathMatch: 'full', component: HomeComponent },
     ]),
   ],
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, NoBillComponent],
 })
 export class SplitAppHomeModule {}
