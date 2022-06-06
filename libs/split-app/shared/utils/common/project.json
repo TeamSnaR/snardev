@@ -1,5 +1,4 @@
 {
-  "root": "libs/split-app/shared/utils/common",
   "sourceRoot": "libs/split-app/shared/utils/common/src",
   "projectType": "library",
   "targets": {

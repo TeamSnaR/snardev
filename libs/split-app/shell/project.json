@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/split-app/shell",
   "sourceRoot": "libs/split-app/shell/src",
   "prefix": "snardev",
   "targets": {

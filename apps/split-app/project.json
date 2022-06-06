@@ -1,6 +1,5 @@
 {
   "projectType": "application",
-  "root": "apps/split-app",
   "sourceRoot": "apps/split-app/src",
   "prefix": "snardev",
   "targets": {

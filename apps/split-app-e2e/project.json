@@ -1,5 +1,4 @@
 {
-  "root": "apps/split-app-e2e",
   "sourceRoot": "apps/split-app-e2e/src",
   "projectType": "application",
   "targets": {

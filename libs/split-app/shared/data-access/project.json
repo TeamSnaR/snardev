@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/split-app/shared/data-access",
   "sourceRoot": "libs/split-app/shared/data-access/src",
   "prefix": "snardev",
   "targets": {

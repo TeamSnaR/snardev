@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/split-app/home",
   "sourceRoot": "libs/split-app/home/src",
   "prefix": "snardev-split-app-home",
   "targets": {

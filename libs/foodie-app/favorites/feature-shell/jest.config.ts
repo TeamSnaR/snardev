@@ -1,6 +1,6 @@
-module.exports = {
+export default {
   displayName: 'foodie-app-favorites-feature-shell',
-  preset: '../../../../jest.preset.ts',
+  preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {

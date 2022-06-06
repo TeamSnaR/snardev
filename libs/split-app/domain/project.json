@@ -1,5 +1,4 @@
 {
-  "root": "libs/split-app/domain",
   "sourceRoot": "libs/split-app/domain/src",
   "projectType": "library",
   "targets": {

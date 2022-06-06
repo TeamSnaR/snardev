@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/foodie-app/recipes/feature-shell",
   "sourceRoot": "libs/foodie-app/recipes/feature-shell/src",
   "prefix": "snardev",
   "targets": {

@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/foodie-app/shell",
   "sourceRoot": "libs/foodie-app/shell/src",
   "prefix": "snardev",
   "targets": {

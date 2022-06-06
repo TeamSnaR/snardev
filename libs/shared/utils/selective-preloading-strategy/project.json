@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/shared/utils/selective-preloading-strategy",
   "sourceRoot": "libs/shared/utils/selective-preloading-strategy/src",
   "prefix": "snardev",
   "targets": {

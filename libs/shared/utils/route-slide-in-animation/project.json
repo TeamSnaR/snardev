@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/shared/utils/route-slide-in-animation",
   "sourceRoot": "libs/shared/utils/route-slide-in-animation/src",
   "prefix": "snardev",
   "targets": {
