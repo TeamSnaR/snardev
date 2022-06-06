@@ -1,0 +1,23 @@
+{
+  "root": "libs/split-app/shared/utils/common",
+  "sourceRoot": "libs/split-app/shared/utils/common/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/split-app/shared/utils/common/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/split-app/shared/utils/common"],
+      "options": {
+        "jestConfig": "libs/split-app/shared/utils/common/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:split-app", "type:utils"]
+}

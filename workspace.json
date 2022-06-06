@@ -19,6 +19,7 @@
     "split-app-e2e": "apps/split-app-e2e",
     "split-app-home": "libs/split-app/home",
     "split-app-shared-data-access": "libs/split-app/shared/data-access",
+    "split-app-shared-utils-common": "libs/split-app/shared/utils/common",
     "split-app-shell": "libs/split-app/shell"
   }
 }

@@ -51,6 +51,9 @@
       "@snardev/split-app/shared/data-access": [
         "libs/split-app/shared/data-access/src/index.ts"
       ],
+      "@snardev/split-app/shared/utils/common": [
+        "libs/split-app/shared/utils/common/src/index.ts"
+      ],
       "@snardev/split-app/shell": ["libs/split-app/shell/src/index.ts"]
     }
   },
