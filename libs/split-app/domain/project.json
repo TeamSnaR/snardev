@@ -1,0 +1,23 @@
+{
+  "root": "libs/split-app/domain",
+  "sourceRoot": "libs/split-app/domain/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/split-app/domain/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/split-app/domain"],
+      "options": {
+        "jestConfig": "libs/split-app/domain/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:split-app", "type:domain"]
+}

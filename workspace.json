@@ -15,6 +15,7 @@
     "shared-utils-route-slide-in-animation": "libs/shared/utils/route-slide-in-animation",
     "shared-utils-selective-preloading-strategy": "libs/shared/utils/selective-preloading-strategy",
     "split-app": "apps/split-app",
+    "split-app-domain": "libs/split-app/domain",
     "split-app-e2e": "apps/split-app-e2e",
     "split-app-home": "libs/split-app/home",
     "split-app-shared-data-access": "libs/split-app/shared/data-access",
