@@ -5,7 +5,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { SplitStore } from '@snardev/split-app/shared/data-access';
-import { FormType } from '@snardev/split-app/domain';
+import { Addendum, Bill, BillItem, FormType } from '@snardev/split-app/domain';
 
 @Component({
   selector: 'snardev-split-app-home-home',
@@ -60,19 +60,19 @@ export class HomeComponent {
     this.splitStore.openModal('charge', id);
   }
 
-  // onCloseModal(payload: BillItem | Addendum | Bill | null) {
-  //   if (!payload) {
-  //     this.splitStore.closeModal();
-  //   } else {
-  //     if ((payload as BillItem).price !== undefined) {
-  //       this.splitStore.saveBillItem(payload as BillItem);
-  //     } else if ((payload as Addendum).rate !== undefined) {
-  //       this.splitStore.saveAddendum(payload as Addendum);
-  //     } else if ((payload as Bill).items !== undefined) {
-  //       this.splitStore.saveBill(payload as Bill);
-  //     }
-  //   }
-  // }
+  onCloseModal(payload: BillItem | Addendum | Bill | null) {
+    if (!payload) {
+      this.splitStore.closeModal();
+    } else {
+      if ((payload as BillItem).price !== undefined) {
+        this.splitStore.saveBillItem(payload as BillItem);
+      } else if ((payload as Addendum).rate !== undefined) {
+        this.splitStore.saveAddendum(payload as Addendum);
+      } else if ((payload as Bill).items !== undefined) {
+        this.splitStore.saveBill(payload as Bill);
+      }
+    }
+  }
 
   onRemoveItem(payload: { id: string; formType: FormType }) {
     this.splitStore.removeItem(payload);
