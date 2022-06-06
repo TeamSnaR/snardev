@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/split-app/shell",
+  "sourceRoot": "libs/split-app/shell/src",
+  "prefix": "snardev",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/split-app/shell"],
+      "options": {
+        "jestConfig": "libs/split-app/shell/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/split-app/shell/**/*.ts",
+          "libs/split-app/shell/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["scope:split-app", "type:feature"]
+}

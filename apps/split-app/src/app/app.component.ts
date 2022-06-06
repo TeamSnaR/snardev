@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'snardev-root',
-  template: ` <snardev-split-form></snardev-split-form> `,
+  template: ` <router-outlet></router-outlet>`,
   styles: [],
 })
 export class AppComponent {

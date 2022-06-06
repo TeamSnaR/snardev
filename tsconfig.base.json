@@ -45,7 +45,8 @@
       ],
       "@snardev/shared/utils/selective-preloading-strategy": [
         "libs/shared/utils/selective-preloading-strategy/src/index.ts"
-      ]
+      ],
+      "@snardev/split-app/shell": ["libs/split-app/shell/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
