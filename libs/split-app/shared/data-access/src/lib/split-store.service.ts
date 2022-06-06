@@ -34,6 +34,21 @@ const DEFAULT_BILL_STATE: Bill = {
   billDate: new Date(),
 };
 
+const MOCK_BILL_STATE: Bill = {
+  ...createBill('Turkish store', DEFAULT_CURRENCY, new Date()),
+  items: [
+    createBillItem('Red wine', 15),
+    createBillItem('item x', 15, 2),
+    createBillItem('item a', 25, 1),
+    createBillItem('item b', 20, 1),
+    createBillItem('item c', 39, 3),
+  ],
+  addendums: [
+    createPercentCharge('service charge', 10),
+    createFixedDiscount('loyalty', 5),
+  ],
+};
+
 const DEFAULT_STATE: SplitState = {
   bill: DEFAULT_BILL_STATE,
   error: '',
@@ -47,7 +62,9 @@ const DEFAULT_STATE: SplitState = {
   providedIn: 'root',
 })
 export class SplitStore extends ComponentStore<SplitState> {
-  readonly subTotal$ = this.select((state) => getBillSubtotal(state.bill));
+  readonly subTotal$ = this.select((state) =>
+    getBillSubtotal(state.bill.items)
+  );
   readonly addendums$ = this.select(
     this.state$,
     this.subTotal$,
@@ -93,18 +110,12 @@ export class SplitStore extends ComponentStore<SplitState> {
       perItemRate,
     })
   );
-  readonly bill$: Observable<
-    Bill & { grandTotal: number; subTotal: number; perItemRate: number }
-  > = this.select(
+  readonly bill$: Observable<Bill> = this.select(
     this.state$,
     this.addendums$,
-    this.calculations$,
-    (state, addendums, calculations) => ({
+    (state, addendums) => ({
       ...state.bill,
       addendums,
-      grandTotal: calculations.grandTotal,
-      subTotal: calculations.subTotal,
-      perItemRate: calculations.perItemRate,
     })
   );
 

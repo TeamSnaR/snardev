@@ -44,15 +44,15 @@ export function createFixedCharge(description: string, rate = 0): Addendum {
   };
 }
 
-export function getBillSubtotal(bill: Bill): number {
-  return bill.items.reduce(
+export function getBillSubtotal(billItems: BillItem[]): number {
+  return billItems.reduce(
     (acc: number, item: BillItem) => acc + item.price * item.quantity,
     0
   );
 }
 
 export function getBillGrandTotal(bill: Bill, addendums: Addendum[]): number {
-  const subTotal = getBillSubtotal(bill);
+  const subTotal = getBillSubtotal(bill.items);
   return addendums.reduce((acc, addendum) => acc + addendum.amount, subTotal);
 }
 

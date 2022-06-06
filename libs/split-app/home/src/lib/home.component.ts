@@ -77,4 +77,8 @@ export class HomeComponent {
   onRemoveItem(payload: { id: string; formType: FormType }) {
     this.splitStore.removeItem(payload);
   }
+
+  trackByIndex(index: number, item: BillItem | Addendum) {
+    return item.id;
+  }
 }

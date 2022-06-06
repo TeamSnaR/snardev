@@ -210,7 +210,11 @@
             <tbody>
               <tr
                 class="border-b border-gray-200"
-                *ngFor="let item of vm.bill.items"
+                *ngFor="
+                  let item of vm.bill.items;
+                  let i = index;
+                  trackBy: trackByIndex
+                "
               >
                 <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
                   <div class="font-medium text-gray-900">
@@ -245,11 +249,12 @@
                     {{ item.price | currency: vm.bill.currency }} each
                     <p
                       class="text-xs text-green-600"
-                      *ngIf="vm.bill.perItemRate > 0"
+                      *ngIf="vm.bill.addendums.length > 0"
                     >
                       + charges
                       {{
-                        item.price * vm.bill.perItemRate
+                        item.price
+                          | perItemCharge: vm.bill
                           | currency: vm.bill.currency
                       }}
                     </p>
@@ -266,11 +271,12 @@
                   {{ item.price | currency: vm.bill.currency }}
                   <p
                     class="text-xs text-green-600"
-                    *ngIf="vm.bill.perItemRate > 0"
+                    *ngIf="vm.bill.addendums.length > 0"
                   >
                     + charges
                     {{
-                      item.price * vm.bill.perItemRate
+                      item.price
+                        | perItemCharge: vm.bill
                         | currency: vm.bill.currency
                     }}
                   </p>
@@ -281,12 +287,12 @@
                   {{ item.price * item.quantity | currency: vm.bill.currency }}
                   <p
                     class="text-xs text-green-600"
-                    *ngIf="vm.bill.perItemRate > 0"
+                    *ngIf="vm.bill.addendums.length > 0"
                   >
                     + charges
                     {{
-                      item.quantity *
-                        (item.price + item.price * vm.bill.perItemRate)
+                      item.price
+                        | perItemTotal: item.quantity:vm.bill
                         | currency: vm.bill.currency
                     }}
                   </p>
@@ -313,10 +319,18 @@
                 <td
                   class="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
                 >
-                  {{ vm.bill.subTotal | currency: vm.bill.currency }}
+                  {{
+                    vm.bill.items | billSubtotal | currency: vm.bill.currency
+                  }}
                 </td>
               </tr>
-              <tr *ngFor="let addendum of vm.bill.addendums">
+              <tr
+                *ngFor="
+                  let addendum of vm.bill.addendums;
+                  let i = index;
+                  trackBy: trackByIndex
+                "
+              >
                 <th
                   scope="row"
                   colspan="3"
@@ -343,7 +357,9 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span class="ml-2">{{ addendum.description }}</span>
+                    <span class="ml-2 text-left">{{
+                      addendum.description
+                    }}</span>
                   </button>
                 </th>
                 <th
@@ -371,7 +387,9 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span class="ml-2">{{ addendum.description }}</span>
+                    <span class="ml-2 text-left">{{
+                      addendum.description
+                    }}</span>
                   </button>
                 </th>
                 <td
@@ -397,7 +415,11 @@
                 <td
                   class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0"
                 >
-                  {{ vm.bill.grandTotal | currency: vm.bill.currency }}
+                  {{
+                    vm.bill
+                      | billGrandTotal: vm.bill.addendums
+                      | currency: vm.bill.currency
+                  }}
                 </td>
               </tr>
             </tfoot>
