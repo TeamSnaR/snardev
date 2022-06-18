@@ -1,0 +1,25 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/split-app/shared/data-access/src",
+  "prefix": "snardev",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/split-app/shared/data-access"],
+      "options": {
+        "jestConfig": "libs/split-app/shared/data-access/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/split-app/shared/data-access/**/*.ts",
+          "libs/split-app/shared/data-access/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["scope:split-app", "type:data-access"]
+}

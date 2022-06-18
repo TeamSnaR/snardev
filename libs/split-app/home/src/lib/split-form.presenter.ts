@@ -9,7 +9,7 @@ import {
   BillItem,
   BillItemFormModel,
   FormType,
-} from './models';
+} from '@snardev/split-app/domain';
 import {
   createBill,
   createBillItem,
@@ -18,7 +18,7 @@ import {
   createPercentCharge,
   createPercentDiscount,
   CURRENCIES,
-} from './utils';
+} from '@snardev/split-app/shared/utils/common';
 
 const DEFAULT_BILL_ITEM_STATE = {
   description: '',

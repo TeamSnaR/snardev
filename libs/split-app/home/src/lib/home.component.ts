@@ -1,14 +1,15 @@
 import {
   Component,
+  OnInit,
   ViewEncapsulation,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Addendum, Bill, BillItem, FormType } from './models';
-import { SplitStore } from './split.store.service';
+import { SplitStore } from '@snardev/split-app/shared/data-access';
+import { Addendum, Bill, BillItem, FormType } from '@snardev/split-app/domain';
 
 @Component({
-  selector: 'snardev-split-form',
-  templateUrl: './split-form.component.html',
+  selector: 'snardev-split-app-home-home',
+  templateUrl: './home.component.html',
   styles: [
     `
       :host {
@@ -19,7 +20,7 @@ import { SplitStore } from './split.store.service';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplitFormComponent {
+export class HomeComponent {
   readonly vm$ = this.splitStore.vm$;
   constructor(private readonly splitStore: SplitStore) {}
 
@@ -75,5 +76,9 @@ export class SplitFormComponent {
 
   onRemoveItem(payload: { id: string; formType: FormType }) {
     this.splitStore.removeItem(payload);
+  }
+
+  trackByIndex(index: number, item: BillItem | Addendum) {
+    return item.id;
   }
 }

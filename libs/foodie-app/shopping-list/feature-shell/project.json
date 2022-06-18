@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/foodie-app/shopping-list/feature-shell",
   "sourceRoot": "libs/foodie-app/shopping-list/feature-shell/src",
   "prefix": "snardev",
   "targets": {

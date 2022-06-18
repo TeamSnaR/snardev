@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable, pipe, tap } from 'rxjs';
-import { Addendum, BillItem, Bill, FormType } from './models';
+import { Addendum, BillItem, Bill, FormType } from '@snardev/split-app/domain';
 import {
   getBillSubtotal,
   getBillGrandTotal,
@@ -12,7 +12,7 @@ import {
   createPercentCharge,
   createBill,
   createFixedDiscount,
-} from './utils';
+} from '@snardev/split-app/shared/utils/common';
 
 export interface SplitState {
   bill: Bill;
@@ -34,6 +34,21 @@ const DEFAULT_BILL_STATE: Bill = {
   billDate: new Date(),
 };
 
+const MOCK_BILL_STATE: Bill = {
+  ...createBill('Turkish store', DEFAULT_CURRENCY, new Date()),
+  items: [
+    createBillItem('Red wine', 15),
+    createBillItem('item x', 15, 2),
+    createBillItem('item a', 25, 1),
+    createBillItem('item b', 20, 1),
+    createBillItem('item c', 39, 3),
+  ],
+  addendums: [
+    createPercentCharge('service charge', 10),
+    createFixedDiscount('loyalty', 5),
+  ],
+};
+
 const DEFAULT_STATE: SplitState = {
   bill: DEFAULT_BILL_STATE,
   error: '',
@@ -44,16 +59,18 @@ const DEFAULT_STATE: SplitState = {
 };
 
 @Injectable({
-  providedIn: 'any',
+  providedIn: 'root',
 })
 export class SplitStore extends ComponentStore<SplitState> {
-  readonly subTotal$ = this.select((state) => getBillSubtotal(state.bill));
+  readonly subTotal$ = this.select((state) =>
+    getBillSubtotal(state.bill.items)
+  );
   readonly addendums$ = this.select(
     this.state$,
     this.subTotal$,
     (state, subTotal) => {
       return state.bill.addendums
-        .reduce((acc, addendum) => {
+        .reduce((acc: Addendum[], addendum: Addendum) => {
           if (addendum.type === 'charge') {
             addendum.amount =
               addendum.amountType === 'percent'
@@ -70,7 +87,7 @@ export class SplitStore extends ComponentStore<SplitState> {
 
           return acc;
         }, [] as Addendum[])
-        .sort((a, b) => b.amount - a.amount);
+        .sort((a: Addendum, b: Addendum) => b.amount - a.amount);
     }
   );
   readonly grandTotal$ = this.select(
@@ -93,18 +110,12 @@ export class SplitStore extends ComponentStore<SplitState> {
       perItemRate,
     })
   );
-  readonly bill$: Observable<
-    Bill & { grandTotal: number; subTotal: number; perItemRate: number }
-  > = this.select(
+  readonly bill$: Observable<Bill> = this.select(
     this.state$,
     this.addendums$,
-    this.calculations$,
-    (state, addendums, calculations) => ({
+    (state, addendums) => ({
       ...state.bill,
       addendums,
-      grandTotal: calculations.grandTotal,
-      subTotal: calculations.subTotal,
-      perItemRate: calculations.perItemRate,
     })
   );
 
@@ -135,7 +146,7 @@ export class SplitStore extends ComponentStore<SplitState> {
           bill: {
             ...bill,
             items: [
-              ...bill.items.filter((bi) => bi.id !== billItem.id),
+              ...bill.items.filter((bi: BillItem) => bi.id !== billItem.id),
               billItem,
             ],
           },
@@ -153,7 +164,7 @@ export class SplitStore extends ComponentStore<SplitState> {
           bill: {
             ...bill,
             addendums: [
-              ...bill.addendums.filter((a) => a.id !== addendum.id),
+              ...bill.addendums.filter((a: Addendum) => a.id !== addendum.id),
               addendum,
             ],
           },
@@ -189,7 +200,9 @@ export class SplitStore extends ComponentStore<SplitState> {
           this.patchState({
             bill: {
               ...bill,
-              items: bill.items.filter((item) => item.id !== payload.id),
+              items: bill.items.filter(
+                (item: BillItem) => item.id !== payload.id
+              ),
             },
           });
         } else if (
@@ -200,7 +213,7 @@ export class SplitStore extends ComponentStore<SplitState> {
             bill: {
               ...bill,
               addendums: bill.addendums.filter(
-                (item) => item.id !== payload.id
+                (item: Addendum) => item.id !== payload.id
               ),
             },
           });
@@ -218,12 +231,12 @@ export class SplitStore extends ComponentStore<SplitState> {
         showOptions: false,
         formType,
         formData: {
-          ...(bill.items.find((item) => item.id === id) ??
+          ...(bill.items.find((item: BillItem) => item.id === id) ??
             createBillItem('', 0, 1)),
         },
       });
     } else if (formType === 'charge' || formType === 'discount') {
-      const addendum = bill.addendums.find((item) => item.id === id);
+      const addendum = bill.addendums.find((item: Addendum) => item.id === id);
       let formData: Addendum;
       if (addendum) {
         formData = { ...addendum };

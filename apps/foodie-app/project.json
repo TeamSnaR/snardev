@@ -1,6 +1,5 @@
 {
   "projectType": "application",
-  "root": "apps/foodie-app",
   "sourceRoot": "apps/foodie-app/src",
   "prefix": "snardev",
   "targets": {

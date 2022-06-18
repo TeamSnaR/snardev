@@ -1,10 +1,7 @@
-import { Addendum, Bill, BillItem } from './models';
+import { Addendum, Bill, BillItem } from '@snardev/split-app/domain';
 import { v4 as uuidv4 } from 'uuid';
 
-export function createPercentDiscount(
-  description: string,
-  rate: number = 0
-): Addendum {
+export function createPercentDiscount(description: string, rate = 0): Addendum {
   return {
     id: uuidv4(),
     description: `${description} (${rate}%)`,
@@ -14,10 +11,7 @@ export function createPercentDiscount(
     type: 'discount',
   };
 }
-export function createFixedDiscount(
-  description: string,
-  rate: number = 0
-): Addendum {
+export function createFixedDiscount(description: string, rate = 0): Addendum {
   return {
     id: uuidv4(),
     description: `${description}`,
@@ -28,10 +22,7 @@ export function createFixedDiscount(
   };
 }
 
-export function createPercentCharge(
-  description: string,
-  rate: number = 0
-): Addendum {
+export function createPercentCharge(description: string, rate = 0): Addendum {
   return {
     id: uuidv4(),
     description: `${description} (${rate}%)`,
@@ -42,10 +33,7 @@ export function createPercentCharge(
   };
 }
 
-export function createFixedCharge(
-  description: string,
-  rate: number = 0
-): Addendum {
+export function createFixedCharge(description: string, rate = 0): Addendum {
   return {
     id: uuidv4(),
     description: `${description}`,
@@ -56,12 +44,15 @@ export function createFixedCharge(
   };
 }
 
-export function getBillSubtotal(bill: Bill): number {
-  return bill.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+export function getBillSubtotal(billItems: BillItem[]): number {
+  return billItems.reduce(
+    (acc: number, item: BillItem) => acc + item.price * item.quantity,
+    0
+  );
 }
 
 export function getBillGrandTotal(bill: Bill, addendums: Addendum[]): number {
-  const subTotal = getBillSubtotal(bill);
+  const subTotal = getBillSubtotal(bill.items);
   return addendums.reduce((acc, addendum) => acc + addendum.amount, subTotal);
 }
 
@@ -86,11 +77,7 @@ export function getBillItemAmountWithCharges(
   return (billItem.price + billItem.price * perItemRate) * billItem.quantity;
 }
 
-export function createBillItem(
-  description: string,
-  price: number = 0,
-  quantity: number = 1
-) {
+export function createBillItem(description: string, price = 0, quantity = 1) {
   return {
     id: uuidv4(),
     description,

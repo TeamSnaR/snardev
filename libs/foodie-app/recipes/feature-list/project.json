@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/foodie-app/recipes/feature-list",
   "sourceRoot": "libs/foodie-app/recipes/feature-list/src",
   "prefix": "snardev",
   "targets": {

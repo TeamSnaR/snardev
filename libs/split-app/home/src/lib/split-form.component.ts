@@ -1,17 +1,18 @@
 import {
   Component,
+  OnInit,
   ViewEncapsulation,
   ChangeDetectionStrategy,
   Input,
   Output,
   EventEmitter,
 } from '@angular/core';
-import { Addendum, Bill, BillItem, FormType } from './models';
+import { FormType, BillItem, Addendum, Bill } from '@snardev/split-app/domain';
 import { SplitFormPresenter } from './split-form.presenter';
 
 @Component({
-  selector: 'snardev-split-form-ui',
-  templateUrl: './split-form-ui.component.html',
+  selector: 'snardev-split-app-home-split-form',
+  templateUrl: './split-form.component.html',
   styles: [
     `
       :host {
@@ -23,7 +24,7 @@ import { SplitFormPresenter } from './split-form.presenter';
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [SplitFormPresenter],
 })
-export class SplitFormUiComponent {
+export class SplitFormComponent {
   private _formShow = false;
   @Input()
   set formShow(value: boolean) {
