@@ -3,9 +3,6 @@
   "affected": {
     "defaultBase": "main"
   },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
   "implicitDependencies": {
     "package.json": {
       "dependencies": "*",
@@ -21,14 +18,6 @@
         "accessToken": "M2I2YWIzZGYtNTliMS00NjM5LWJjYWMtZDcyYjc2NmQ5NzUwfHJlYWQ="
       }
     }
-  },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
   },
   "generators": {
     "@nrwl/angular:application": {
@@ -60,5 +49,11 @@
       "skipTests": true
     }
   },
-  "defaultProject": "foodie-app"
+  "defaultProject": "foodie-app",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
+  }
 }

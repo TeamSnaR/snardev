@@ -21,5 +21,6 @@
     "split-app-shared-data-access": "libs/split-app/shared/data-access",
     "split-app-shared-utils-common": "libs/split-app/shared/utils/common",
     "split-app-shell": "libs/split-app/shell"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
