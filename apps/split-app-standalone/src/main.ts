@@ -12,7 +12,18 @@ if (environment.production) {
 bootstrapApplication(SplitAppComponent, {
   providers: [
     importProvidersFrom(
-      RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' })
+      RouterModule.forRoot(
+        [
+          {
+            path: '',
+            loadComponent: () =>
+              import('@snardev/split-app-standalone/layout/feature').then(
+                (m) => m.LayoutComponent
+              ),
+          },
+        ],
+        { initialNavigation: 'enabledBlocking' }
+      )
     ),
   ],
 }).catch((err) => console.error(err));

@@ -5,14 +5,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutComponent } from '@snardev/split-app-standalone/layout/feature';
-import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'sas-split-app-root',
+  selector: 'snardev-sas-header',
   standalone: true,
-  imports: [CommonModule, LayoutComponent, RouterModule],
-  template: ` <router-outlet></router-outlet> `,
+  imports: [CommonModule],
+  templateUrl: './header.component.html',
   styles: [
     `
       :host {
@@ -23,7 +21,7 @@ import { RouterModule } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplitAppComponent implements OnInit {
+export class HeaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
