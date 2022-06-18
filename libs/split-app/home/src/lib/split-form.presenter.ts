@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import {
   Addendum,
   AddendumFormModel,
@@ -40,14 +44,14 @@ const DEFAULT_BILL_STATE = {
 
 @Injectable()
 export class SplitFormPresenter {
-  splitForm!: FormGroup;
+  splitForm!: UntypedFormGroup;
   currencies = CURRENCIES;
-  constructor(private readonly formBuilder: FormBuilder) {}
+  constructor(private readonly formBuilder: UntypedFormBuilder) {}
 
   createForm(
     formType: FormType,
     formData: Bill | Addendum | BillItem | null
-  ): FormGroup {
+  ): UntypedFormGroup {
     if (formType === 'item') {
       this.splitForm = this.createBillItemForm(
         (formData as BillItem) ?? DEFAULT_BILL_ITEM_STATE
@@ -149,7 +153,7 @@ export class SplitFormPresenter {
     return bill;
   }
 
-  private createAddendumForm(formData: Addendum): FormGroup {
+  private createAddendumForm(formData: Addendum): UntypedFormGroup {
     return this.formBuilder.group(
       {
         description: [
@@ -163,7 +167,7 @@ export class SplitFormPresenter {
     );
   }
 
-  private createBillItemForm(formData: BillItem): FormGroup {
+  private createBillItemForm(formData: BillItem): UntypedFormGroup {
     return this.formBuilder.group(
       {
         description: this.formBuilder.control(formData.description, {
@@ -180,7 +184,7 @@ export class SplitFormPresenter {
     );
   }
 
-  private createBillForm(formData: Bill): FormGroup {
+  private createBillForm(formData: Bill): UntypedFormGroup {
     return this.formBuilder.group(
       {
         description: [formData.description, [Validators.required]],
