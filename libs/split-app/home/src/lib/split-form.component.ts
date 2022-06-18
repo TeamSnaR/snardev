@@ -25,6 +25,8 @@ import { SplitFormPresenter } from './split-form.presenter';
   viewProviders: [SplitFormPresenter],
 })
 export class SplitFormComponent {
+  @Input()
+  currency!: string;
   private _formShow = false;
   @Input()
   set formShow(value: boolean) {
