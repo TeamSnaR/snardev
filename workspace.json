@@ -20,7 +20,9 @@
     "split-app-home": "libs/split-app/home",
     "split-app-shared-data-access": "libs/split-app/shared/data-access",
     "split-app-shared-utils-common": "libs/split-app/shared/utils/common",
-    "split-app-shell": "libs/split-app/shell"
+    "split-app-shell": "libs/split-app/shell",
+    "split-app-standalone": "apps/split-app-standalone",
+    "split-app-standalone-e2e": "apps/split-app-standalone-e2e"
   },
   "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

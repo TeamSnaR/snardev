@@ -17,6 +17,7 @@
     "dev:foodie:app": "nx serve foodie-app",
     "build:foodie:app": "nx build foodie-app",
     "dev:split:app": "nx serve split-app --parallel",
+    "dev:split-standalone:app": "nx serve split-app-standalone --parallel",
     "postinstall": "ngcc --properties es2020 browser module main"
   },
   "private": true,
