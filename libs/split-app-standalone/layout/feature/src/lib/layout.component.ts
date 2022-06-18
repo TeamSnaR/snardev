@@ -23,8 +23,7 @@ import { FooterComponent } from './footer/footer.component';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
-
-  ngOnInit(): void {}
 }

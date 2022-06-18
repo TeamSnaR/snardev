@@ -23,8 +23,7 @@ import { RouterModule } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SplitAppComponent implements OnInit {
+export class SplitAppComponent {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
-
-  ngOnInit(): void {}
 }

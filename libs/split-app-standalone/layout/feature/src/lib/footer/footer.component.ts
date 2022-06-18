@@ -21,8 +21,7 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
-
-  ngOnInit(): void {}
 }
