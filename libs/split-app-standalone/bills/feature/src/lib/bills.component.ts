@@ -6,11 +6,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { of } from 'rxjs';
 import { BillsStore } from './bills.store';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'snardev-sas-bills',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './bills.component.html',
   styles: [
     `

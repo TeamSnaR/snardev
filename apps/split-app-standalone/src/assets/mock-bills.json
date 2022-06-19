@@ -1,25 +1,44 @@
 {
   "result": [
     {
-      "id": "1",
+      "id": "bdf24fce-4a4c-4fe7-962d-443bf1468b17",
       "description": "Mai Thai",
       "location": "Shirley Road",
-      "date": "2022-06-12"
+      "date": "2022-06-12",
+      "currency": "GBP",
+      "billItems": [
+        {
+          "id": "80e3fe08-baf2-4014-afd8-09f61d494567",
+          "description": "Pad Thai",
+          "quantity": 1,
+          "price": 10.95,
+          "currency": "GBP"
+        }
+      ]
     },
     {
-      "id": "2",
+      "id": "ba720b80-5e2b-4153-be09-17d691cda8cc",
       "description": "Zizzi",
       "location": "West Quay",
-      "date": "2022-06-8"
+      "date": "2022-06-8",
+      "billItems": [
+        {
+          "id": "80e3fe08-baf2-4014-afd8-09f61d494567",
+          "description": "Sundried Pesto Pasta",
+          "quantity": 1,
+          "price": 12.95,
+          "currency": "GBP"
+        }
+      ]
     },
     {
-      "id": "3",
+      "id": "aa262a9d-1d31-4693-8d87-6fbd1d0e0d2a",
       "description": "Fresh Shawarma",
       "location": "Shirley Road",
       "date": "2022-06-11"
     },
     {
-      "id": "4",
+      "id": "34eaf36e-4387-4b3e-85a6-320c33dbd2fd",
       "description": "Banana Wharf",
       "location": "Ocean Village",
       "date": "2022-06-04"

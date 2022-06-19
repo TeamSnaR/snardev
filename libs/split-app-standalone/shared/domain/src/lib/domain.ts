@@ -18,6 +18,22 @@ export function createBill(
   };
 }
 
+export function createBillItem(
+  description: string,
+  currency: string,
+  price = 0,
+  quantity = 1,
+  id?: string
+) {
+  return {
+    id: id || uuidv4(),
+    description,
+    currency,
+    price,
+    quantity,
+  };
+}
+
 function createDiscount(
   description: string,
   currency: string,

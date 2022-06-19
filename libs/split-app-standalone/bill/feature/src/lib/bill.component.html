@@ -1,13 +1,4 @@
 <ng-container *ngIf="vm$ | async as vm">
-  <snardev-split-app-home-split-form
-    [formShow]="vm.showModal"
-    [formType]="vm.formType"
-    [formData]="vm.formData"
-    [currency]="vm.bill.currency"
-    (formClose)="onCloseModal($event)"
-    (removeItem)="onRemoveItem($event)"
-  >
-  </snardev-split-app-home-split-form>
   <ng-container *ngIf="vm.hasBill; else noBill">
     <div class="px-4 py-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center">
@@ -15,13 +6,13 @@
           <div class="flex-auto">
             <h1 class="text-xl font-semibold text-gray-900">
               <button
-                title="Edit bill"
                 (click)="editBill()"
+                title="Edit bill"
                 type="button"
                 class="inline-flex items-center border border-transparent text-sm font-medium rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <span class="mr-2 text-xl">{{
-                  vm.bill.description | uppercase
+                  vm.bill?.description | uppercase
                 }}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -42,14 +33,13 @@
             </h1>
             <p class="mt-1 text-sm text-gray-700">
               on
-              <time [attr.datetime]="vm.bill.billDate | date: 'longDate'">
-                {{ vm.bill.billDate | date: 'longDate' }}
+              <time [attr.datetime]="vm.bill?.date | date: 'longDate'">
+                {{ vm.bill?.date | date: 'longDate' }}
               </time>
             </p>
           </div>
           <div class="flex-auto text-right">
             <button
-              (click)="resetBill()"
               type="button"
               class="inline-flex items-center px-4 py-2 border border-gray-300 bg-white shadow-sm text-sm font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
@@ -201,9 +191,9 @@
               <tr
                 class="border-b border-gray-200"
                 *ngFor="
-                  let item of vm.bill.items;
+                  let item of vm.bill?.billItems;
                   let i = index;
-                  trackBy: trackByIndex
+                  trackBy: trackByBillItemId
                 "
               >
                 <td class="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
@@ -236,17 +226,14 @@
                   </div>
                   <div class="mt-0.5 text-gray-500 sm:hidden">
                     {{ item.quantity }} at
-                    {{ item.price | currency: vm.bill.currency }} each
-                    <p
-                      class="text-xs text-green-600"
-                      *ngIf="vm.bill.addendums.length > 0"
-                    >
+                    {{ item.price | currency: vm.bill?.currency }} each
+                    <p class="text-xs text-green-600" *ngIf="vm.hasAddendums">
                       + charges
-                      {{
-                        item.price
-                          | perItemCharge: vm.bill
-                          | currency: vm.bill.currency
-                      }}
+                      <!-- {{
+                      item.price
+                        | perItemCharge: vm.bill
+                        | currency: vm.bill.currency
+                    }} -->
                     </p>
                   </div>
                 </td>
@@ -258,33 +245,27 @@
                 <td
                   class="hidden py-4 px-3 text-right text-sm text-gray-500 sm:table-cell"
                 >
-                  {{ item.price | currency: vm.bill.currency }}
-                  <p
-                    class="text-xs text-green-600"
-                    *ngIf="vm.bill.addendums.length > 0"
-                  >
+                  {{ item.price | currency: vm.bill?.currency }}
+                  <p class="text-xs text-green-600" *ngIf="vm.hasAddendums">
                     + charges
-                    {{
-                      item.price
-                        | perItemCharge: vm.bill
-                        | currency: vm.bill.currency
-                    }}
+                    <!-- {{
+                    item.price
+                      | perItemCharge: vm.bill
+                      | currency: vm.bill.currency
+                  }} -->
                   </p>
                 </td>
                 <td
                   class="py-4 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
                 >
-                  {{ item.price * item.quantity | currency: vm.bill.currency }}
-                  <p
-                    class="text-xs text-green-600"
-                    *ngIf="vm.bill.addendums.length > 0"
-                  >
+                  {{ item.price * item.quantity | currency: vm.bill?.currency }}
+                  <p class="text-xs text-green-600" *ngIf="vm.hasAddendums">
                     + charges
-                    {{
-                      item.price
-                        | perItemTotal: item.quantity:vm.bill
-                        | currency: vm.bill.currency
-                    }}
+                    <!-- {{
+                    item.price
+                      | perItemTotal: item.quantity:vm.bill
+                      | currency: vm.bill.currency
+                  }} -->
                   </p>
                 </td>
               </tr>
@@ -309,16 +290,14 @@
                 <td
                   class="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
                 >
-                  {{
-                    vm.bill.items | billSubtotal | currency: vm.bill.currency
-                  }}
+                  <!-- {{ vm.bill.items | billSubtotal | currency: vm.bill.currency }} -->
                 </td>
               </tr>
               <tr
                 *ngFor="
-                  let addendum of vm.bill.addendums;
+                  let addendum of vm.bill?.addendums;
                   let i = index;
-                  trackBy: trackByIndex
+                  trackBy: trackByAddendumId
                 "
               >
                 <th
@@ -385,7 +364,7 @@
                 <td
                   class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-6 md:pr-0"
                 >
-                  {{ addendum.amount | currency: vm.bill.currency }}
+                  {{ addendum.amount | currency: vm.bill?.currency }}
                 </td>
               </tr>
               <tr>
@@ -405,11 +384,11 @@
                 <td
                   class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0"
                 >
-                  {{
-                    vm.bill
-                      | billGrandTotal: vm.bill.addendums
-                      | currency: vm.bill.currency
-                  }}
+                  <!-- {{
+                  vm.bill
+                    | billGrandTotal: vm.bill.addendums
+                    | currency: vm.bill.currency
+                }} -->
                 </td>
               </tr>
             </tfoot>
@@ -418,16 +397,9 @@
       </div>
     </div>
   </ng-container>
-  <ng-template #loading>
-    <p *ngIf="!vm.error">Loading...</p>
-  </ng-template>
 </ng-container>
 
-<ng-template #noBill>
-  <snardev-split-app-home-no-bill
-    (createBill)="createBill()"
-  ></snardev-split-app-home-no-bill>
-</ng-template>
+<ng-template #noBill> No bill </ng-template>
 
 <ng-template #noItems>
   <!-- This example requires Tailwind CSS v2.0+ -->

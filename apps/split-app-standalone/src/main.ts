@@ -29,7 +29,7 @@ bootstrapApplication(SplitAppComponent, {
               ),
           },
         ],
-        { initialNavigation: 'enabledBlocking' }
+        { initialNavigation: 'enabledBlocking', onSameUrlNavigation: 'reload' }
       )
     ),
     {
