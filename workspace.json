@@ -22,6 +22,7 @@
     "split-app-shared-utils-common": "libs/split-app/shared/utils/common",
     "split-app-shell": "libs/split-app/shell",
     "split-app-standalone": "apps/split-app-standalone",
+    "split-app-standalone-bills-feature": "libs/split-app-standalone/bills/feature",
     "split-app-standalone-e2e": "apps/split-app-standalone-e2e",
     "split-app-standalone-layout-feature": "libs/split-app-standalone/layout/feature"
   },

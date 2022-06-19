@@ -46,6 +46,9 @@
       "@snardev/shared/utils/selective-preloading-strategy": [
         "libs/shared/utils/selective-preloading-strategy/src/index.ts"
       ],
+      "@snardev/split-app-standalone/bills/feature": [
+        "libs/split-app-standalone/bills/feature/src/index.ts"
+      ],
       "@snardev/split-app-standalone/layout/feature": [
         "libs/split-app-standalone/layout/feature/src/index.ts"
       ],
