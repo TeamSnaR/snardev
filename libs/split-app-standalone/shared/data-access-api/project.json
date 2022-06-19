@@ -1,0 +1,46 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/split-app-standalone/shared/data-access-api/src",
+  "prefix": "snardev",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/split-app-standalone/shared/data-access-api"],
+      "options": {
+        "project": "libs/split-app-standalone/shared/data-access-api/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/split-app-standalone/shared/data-access-api/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/split-app-standalone/shared/data-access-api/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/split-app-standalone/shared/data-access-api"],
+      "options": {
+        "jestConfig": "libs/split-app-standalone/shared/data-access-api/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/split-app-standalone/shared/data-access-api/**/*.ts",
+          "libs/split-app-standalone/shared/data-access-api/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": [
+    "scope:split-app-standalone",
+    "type:feature",
+    "context:shared",
+    "context:shared:api"
+  ]
+}

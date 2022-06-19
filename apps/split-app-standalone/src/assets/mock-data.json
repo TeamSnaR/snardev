@@ -1,0 +1,28 @@
+{
+  "bills": [
+    {
+      "id": "1",
+      "description": "Mai Thai",
+      "location": "Shirley Road",
+      "date": "2022-06-12"
+    },
+    {
+      "id": "2",
+      "description": "Zizzi",
+      "location": "West Quay",
+      "date": "2022-06-8"
+    },
+    {
+      "id": "3",
+      "description": "Fresh Shawarma",
+      "location": "Shirley Road",
+      "date": "2022-06-11"
+    },
+    {
+      "id": "4",
+      "description": "Banana Wharf",
+      "location": "Ocean Village",
+      "date": "2022-06-04"
+    }
+  ]
+}

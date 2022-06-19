@@ -1,10 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { of } from 'rxjs';
+import { BillsStore } from './bills.store';
 
 @Component({
   selector: 'snardev-sas-bills',
@@ -21,8 +22,14 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BillsComponent implements OnInit {
-  constructor() {}
+export class BillsComponent {
+  vm$ = this.store.vm$;
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor(private readonly store: BillsStore) {
+    this.store.loadBills();
+  }
 
-  ngOnInit(): void {}
+  trackByBillId(index: number, bill: any) {
+    return bill.id;
+  }
 }

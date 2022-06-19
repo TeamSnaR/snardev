@@ -6,6 +6,8 @@ import { TemplatePageTitleStrategy } from '@snardev/split-app-standalone/layout/
 import { SplitAppComponent } from './app/split-app.component';
 import { environment } from './environments/environment';
 
+import { HttpClientModule } from '@angular/common/http';
+
 if (environment.production) {
   enableProdMode();
 }
@@ -34,5 +36,6 @@ bootstrapApplication(SplitAppComponent, {
       provide: TitleStrategy,
       useClass: TemplatePageTitleStrategy,
     },
+    importProvidersFrom(HttpClientModule),
   ],
 }).catch((err) => console.error(err));
