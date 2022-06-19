@@ -2,10 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { SplitAppService } from '@snardev/split-app-standalone/shared/data-access-api';
+import { Bill } from '@snardev/split-app-standalone/shared/domain';
 import { pipe, concatMap } from 'rxjs';
 
 interface BillState {
-  bills: any[];
+  bills: Bill[];
 }
 
 const DEFAULT_STATE: BillState = {
