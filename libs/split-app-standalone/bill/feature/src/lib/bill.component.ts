@@ -29,7 +29,7 @@ export class BillComponent {
     private readonly store: BillStore,
     private route: ActivatedRoute
   ) {
-    this.store.initPage(this.route);
+    this.store.initPage();
   }
 
   editBill() {

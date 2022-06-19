@@ -7,6 +7,8 @@ import { SplitAppComponent } from './app/split-app.component';
 import { environment } from './environments/environment';
 
 import { HttpClientModule } from '@angular/common/http';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
 
 if (environment.production) {
   enableProdMode();
@@ -37,5 +39,11 @@ bootstrapApplication(SplitAppComponent, {
       useClass: TemplatePageTitleStrategy,
     },
     importProvidersFrom(HttpClientModule),
+    importProvidersFrom(
+      StoreModule.forRoot({
+        router: routerReducer,
+      })
+    ),
+    importProvidersFrom(StoreRouterConnectingModule.forRoot()),
   ],
 }).catch((err) => console.error(err));
