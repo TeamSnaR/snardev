@@ -39,8 +39,8 @@
   },
   "tags": [
     "scope:split-app-standalone",
-    "type:feature",
-    "context:shared",
+    "type:data-access",
+    "scope:shared",
     "context:shared:api"
   ]
 }
