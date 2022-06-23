@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {
   Bill,
-  BillItem,
-  calculateBillSubtotal,
   calculatePerItemChargeRates,
 } from '@snardev/split-app-standalone/shared/domain';
 
