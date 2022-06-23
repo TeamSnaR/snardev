@@ -1,26 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { getSelectors, ROUTER_NAVIGATED } from '@ngrx/router-store';
+import { getSelectors } from '@ngrx/router-store';
 import { SplitAppService } from '@snardev/split-app-standalone/shared/data-access-api';
 import { Bill } from '@snardev/split-app-standalone/shared/domain';
-import {
-  concatMap,
-  concatMapTo,
-  map,
-  switchMap,
-  tap,
-  pipe,
-  mergeMap,
-} from 'rxjs';
-import { ofType } from '@ngrx/effects';
+import { switchMap, pipe } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 
-const {
-  selectRouteParam,
-  selectRouteParams, // select the current route params
-} = getSelectors();
+const { selectRouteParam } = getSelectors();
 interface BillState {
   bill: Bill | null;
 }
@@ -45,9 +32,7 @@ export class BillStore extends ComponentStore<BillState> {
 
   initPage = this.effect<void>(
     pipe(
-      mergeMap(
-        () => this.store.pipe(select(selectRouteParam('id'))) // get the id from the router store
-      ),
+      switchMap(() => this.store.pipe(select(selectRouteParam('id')))),
       switchMap((id) => this.api.getBill(String(id))),
       tapResponse(
         (bill: Bill | null) => {
