@@ -1,17 +1,29 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BillStore } from './bill.store';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import {
+  BillGrandTotalPipe,
+  BillSubtotalPipe,
+  ItemChargePipe,
+  ItemTotalPipe,
+} from '@snardev/split-app-standalone/shared/utils-bill-pipes';
 
 @Component({
   selector: 'snardev-sas-bill',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ItemTotalPipe,
+    BillSubtotalPipe,
+    BillGrandTotalPipe,
+    ItemChargePipe,
+  ],
   templateUrl: './bill.component.html',
   styles: [
     `

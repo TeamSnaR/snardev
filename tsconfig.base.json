@@ -61,6 +61,9 @@
       "@snardev/split-app-standalone/shared/domain": [
         "libs/split-app-standalone/shared/domain/src/index.ts"
       ],
+      "@snardev/split-app-standalone/shared/utils-bill-pipes": [
+        "libs/split-app-standalone/shared/utils-bill-pipes/src/index.ts"
+      ],
       "@snardev/split-app/domain": ["libs/split-app/domain/src/index.ts"],
       "@snardev/split-app/home": ["libs/split-app/home/src/index.ts"],
       "@snardev/split-app/shared/data-access": [

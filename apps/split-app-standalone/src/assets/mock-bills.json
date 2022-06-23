@@ -13,6 +13,23 @@
           "quantity": 1,
           "price": 10.95,
           "currency": "GBP"
+        },
+        {
+          "id": "9751d5c4-f8dd-4a6c-86ca-2f328d86422d",
+          "description": "Sweet and sour pork",
+          "quantity": 1,
+          "price": 10.95,
+          "currency": "GBP"
+        }
+      ],
+      "addendums": [
+        {
+          "id": "b7ef6ab2-d291-4403-846d-0dff93fe67b7",
+          "description": "Service charge",
+          "currency": "GBP",
+          "amount": 10,
+          "amountType": "percent",
+          "type": "charge"
         }
       ]
     },

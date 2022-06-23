@@ -11,7 +11,6 @@ export interface BillItem {
 export interface Addendum {
   id: string;
   description: string;
-  rate: number;
   currency: string;
   amount: number;
   amountType: AmountType;

@@ -27,7 +27,8 @@
     "split-app-standalone-e2e": "apps/split-app-standalone-e2e",
     "split-app-standalone-layout-feature": "libs/split-app-standalone/layout/feature",
     "split-app-standalone-shared-data-access-api": "libs/split-app-standalone/shared/data-access-api",
-    "split-app-standalone-shared-domain": "libs/split-app-standalone/shared/domain"
+    "split-app-standalone-shared-domain": "libs/split-app-standalone/shared/domain",
+    "split-app-standalone-shared-utils-bill-pipes": "libs/split-app-standalone/shared/utils-bill-pipes"
   },
   "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

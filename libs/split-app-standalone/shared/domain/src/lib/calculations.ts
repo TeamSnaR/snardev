@@ -23,8 +23,8 @@ const calculatePerItemChargeRates = memoizee(
       .reduce((acc, charge) => {
         const rate =
           charge.amountType === 'fixed'
-            ? (charge.rate * 100) / billTotal
-            : charge.rate / 100;
+            ? (charge.amount * 100) / billTotal
+            : charge.amount / 100;
 
         return acc + rate;
       }, 0);

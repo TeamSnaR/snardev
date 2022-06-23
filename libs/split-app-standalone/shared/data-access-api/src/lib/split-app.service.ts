@@ -4,6 +4,10 @@ import { map, Observable, tap } from 'rxjs';
 import {
   Bill,
   createBillItem,
+  createFixedCharge,
+  createFixedDiscount,
+  createPercentCharge,
+  createPercentDiscount,
 } from '@snardev/split-app-standalone/shared/domain';
 import { createBill } from '@snardev/split-app-standalone/shared/domain';
 
@@ -75,6 +79,42 @@ export class SplitAppService {
               bi.id
             )
           );
+
+          billResult.addendums = (bill.addendums || []).map((add) => {
+            if (add.type === 'charge') {
+              if (add.amountType === 'fixed') {
+                return createFixedCharge(
+                  add.description,
+                  add.currency,
+                  add.amount,
+                  add.id
+                );
+              } else {
+                return createPercentCharge(
+                  add.description,
+                  add.currency,
+                  add.amount,
+                  add.id
+                );
+              }
+            } else {
+              if (add.amountType == 'fixed') {
+                return createFixedDiscount(
+                  add.description,
+                  add.currency,
+                  add.amount,
+                  add.id
+                );
+              } else {
+                return createPercentDiscount(
+                  add.description,
+                  add.currency,
+                  add.amount,
+                  add.id
+                );
+              }
+            }
+          });
           return billResult;
         })
       );

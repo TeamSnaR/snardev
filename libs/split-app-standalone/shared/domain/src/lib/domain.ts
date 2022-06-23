@@ -8,7 +8,7 @@ export function createBill(
   id?: string
 ): Bill {
   return {
-    id: id || uuidv4(),
+    id: id ?? uuidv4(),
     description,
     date: billDate,
     currency,
@@ -26,7 +26,7 @@ export function createBillItem(
   id?: string
 ) {
   return {
-    id: id || uuidv4(),
+    id: id ?? uuidv4(),
     description,
     currency,
     price,
@@ -37,13 +37,12 @@ export function createBillItem(
 function createDiscount(
   description: string,
   currency: string,
-  rate = 0
+  amount = 0
 ): Addendum {
   return {
-    id: uuidv4(),
-    description: `${description} (${rate}%)`,
-    rate: rate * -1,
-    amount: 0,
+    id: '',
+    description: `${description} (${amount}%)`,
+    amount: amount * -1,
     amountType: 'percent',
     type: 'discount',
     currency,
@@ -53,20 +52,24 @@ function createDiscount(
 export function createPercentDiscount(
   description: string,
   currency: string,
-  rate = 0
+  amount = 0,
+  id?: string
 ): Addendum {
   return {
-    ...createDiscount(description, currency, rate),
+    ...createDiscount(description, currency, amount / 100),
+    id: id ?? uuidv4(),
     amountType: 'percent',
   };
 }
 export function createFixedDiscount(
   description: string,
   currency: string,
-  rate = 0
+  amount = 0,
+  id?: string
 ): Addendum {
   return {
-    ...createDiscount(description, currency, rate),
+    ...createDiscount(description, currency, amount),
+    id: id ?? uuidv4(),
     amountType: 'fixed',
   };
 }
@@ -74,13 +77,12 @@ export function createFixedDiscount(
 function createCharge(
   description: string,
   currency: string,
-  rate = 0
+  amount = 0
 ): Addendum {
   return {
-    id: uuidv4(),
-    description: `${description} (${rate}%)`,
-    rate: rate * -1,
-    amount: 0,
+    id: '',
+    description: `${description} (${amount}%)`,
+    amount: amount * -1,
     amountType: 'percent',
     type: 'charge',
     currency,
@@ -90,10 +92,12 @@ function createCharge(
 export function createPercentCharge(
   description: string,
   currency: string,
-  rate = 0
+  amount = 0,
+  id?: string
 ): Addendum {
   return {
-    ...createCharge(description, currency, rate),
+    ...createCharge(description, currency, amount / 100),
+    id: id ?? uuidv4(),
     amountType: 'percent',
   };
 }
@@ -101,10 +105,12 @@ export function createPercentCharge(
 export function createFixedCharge(
   description: string,
   currency: string,
-  rate = 0
+  amount = 0,
+  id?: string
 ): Addendum {
   return {
-    ...createCharge(description, currency, rate),
+    ...createCharge(description, currency, amount),
+    id: id ?? uuidv4(),
     amountType: 'fixed',
   };
 }
