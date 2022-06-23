@@ -18,7 +18,8 @@
           "apps/split-app-standalone/src/assets"
         ],
         "styles": ["apps/split-app-standalone/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": ["memoizee"]
       },
       "configurations": {
         "production": {
