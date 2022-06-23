@@ -38,29 +38,6 @@
               </time>
             </p>
           </div>
-          <div class="flex-auto text-right">
-            <button
-              type="button"
-              class="inline-flex items-center px-4 py-2 border border-gray-300 bg-white shadow-sm text-sm font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <!-- Heroicon name: solid/plus -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="sm:-ml-1 h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-              <span class="hidden sm:inline-block sm:ml-2">Start over</span>
-            </button>
-          </div>
         </div>
         <div
           class="mt-4 space-x-4 sm:mt-0 sm:ml-16 sm:flex-none"
@@ -394,6 +371,28 @@
             </tfoot>
           </table>
         </ng-container>
+      </div>
+      <div class="mt-8">
+        <a
+          [routerLink]="['/bills']"
+          class="inline-flex items-center px-4 py-2 border border-gray-300 bg-white shadow-sm text-sm font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M11 17l-5-5m0 0l5-5m-5 5h12"
+            />
+          </svg>
+          <span class="hidden sm:inline-block sm:ml-2">Go back</span>
+        </a>
       </div>
     </div>
   </ng-container>

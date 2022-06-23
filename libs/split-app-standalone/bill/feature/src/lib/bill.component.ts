@@ -6,12 +6,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BillStore } from './bill.store';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'snardev-sas-bill',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './bill.component.html',
   styles: [
     `
