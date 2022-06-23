@@ -3,6 +3,22 @@
   "sourceRoot": "libs/split-app-standalone/shared/utils-bill-pipes/src",
   "prefix": "snardev",
   "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/split-app-standalone/shared/utils-bill-pipes"],
+      "options": {
+        "project": "libs/split-app-standalone/shared/utils-bill-pipes/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/split-app-standalone/shared/utils-bill-pipes/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/split-app-standalone/shared/utils-bill-pipes/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/split-app-standalone/shared/utils-bill-pipes"],
@@ -24,6 +40,6 @@
   "tags": [
     "scope:split-app-standalone",
     "type:utils",
-    "context:utils:bill:pipes"
+    "context:shared:utils:pipes"
   ]
 }
