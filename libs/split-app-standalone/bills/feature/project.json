@@ -1,0 +1,41 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/split-app-standalone/bills/feature/src",
+  "prefix": "snardev",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/split-app-standalone/bills/feature"],
+      "options": {
+        "project": "libs/split-app-standalone/bills/feature/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/split-app-standalone/bills/feature/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/split-app-standalone/bills/feature/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/split-app-standalone/bills/feature"],
+      "options": {
+        "jestConfig": "libs/split-app-standalone/bills/feature/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/split-app-standalone/bills/feature/**/*.ts",
+          "libs/split-app-standalone/bills/feature/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["scope:split-app-standalone", "type:feature", "context:bills"]
+}

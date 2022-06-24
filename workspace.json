@@ -20,7 +20,15 @@
     "split-app-home": "libs/split-app/home",
     "split-app-shared-data-access": "libs/split-app/shared/data-access",
     "split-app-shared-utils-common": "libs/split-app/shared/utils/common",
-    "split-app-shell": "libs/split-app/shell"
+    "split-app-shell": "libs/split-app/shell",
+    "split-app-standalone": "apps/split-app-standalone",
+    "split-app-standalone-bill-feature": "libs/split-app-standalone/bill/feature",
+    "split-app-standalone-bills-feature": "libs/split-app-standalone/bills/feature",
+    "split-app-standalone-e2e": "apps/split-app-standalone-e2e",
+    "split-app-standalone-layout-feature": "libs/split-app-standalone/layout/feature",
+    "split-app-standalone-shared-data-access-api": "libs/split-app-standalone/shared/data-access-api",
+    "split-app-standalone-shared-domain": "libs/split-app-standalone/shared/domain",
+    "split-app-standalone-shared-utils-bill-pipes": "libs/split-app-standalone/shared/utils-bill-pipes"
   },
   "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

@@ -1,0 +1,16 @@
+<div class="min-h-full">
+  <snardev-sas-header></snardev-sas-header>
+  <snardev-sas-page
+    [pageHeading]="pageHeading"
+    [heading]="(pageHeading$ | async)!"
+  >
+    <router-outlet slot="main"></router-outlet>
+  </snardev-sas-page>
+</div>
+<snardev-sas-footer></snardev-sas-footer>
+
+<ng-template #pageHeading let-heading>
+  <h1 class="text-3xl font-bold leading-tight text-gray-900">
+    {{ heading }}
+  </h1>
+</ng-template>
